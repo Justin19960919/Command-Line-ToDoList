@@ -6,21 +6,20 @@ public abstract class AbstractProperties {
     this.address = address;
     // Checks
     this.checkValue(sizeInSqft);  // Non = negative
-
-    this.sizeInSqft = size  protected void checkValue(Integer value) throws NegativeValueException{
-      if(value < 0){
-        throw new NegativeValueException();
-      }
-    }
-
-    protected void checkValue(Double value) throws NegativeValueException{
-      if(value < 0){
-        throw new NegativeValueException();
-      }
-    }InSqft;
+    this.sizeInSqft = sizeInSqft;
   }
 
+  protected void checkValue(Integer value) throws NegativeValueException{
+    if(value < 0){
+      throw new NegativeValueException();
+    }
+  }
 
+  protected void checkValue(Double value) throws NegativeValueException{
+    if(value < 0){
+      throw new NegativeValueException();
+    }
+  }
 
 
 }
