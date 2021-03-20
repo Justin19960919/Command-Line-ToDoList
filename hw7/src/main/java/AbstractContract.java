@@ -1,7 +1,7 @@
 /**
  * A class that represents a contract, covering a sales contract and a rental contract.
  */
-public class AbstractContract {
+public abstract class AbstractContract implements IContract{
 
   protected Double askingPrice;
   protected boolean negotiableOrNot;

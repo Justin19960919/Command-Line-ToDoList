@@ -20,8 +20,15 @@ public class RentalContract extends AbstractContract{
     if(termOnMonths <= 0){
       throw new ZeroOrNegativeException();
     }
-    this.termInMonths = termInMonths;
+    this.termInMonths = termOnMonths;
   }
 
 
+  /**
+   * @return the total amount of the contract
+   */
+  @Override
+  public double getTotalPrice() {
+    return this.askingPrice * this.termInMonths;
+  }
 }

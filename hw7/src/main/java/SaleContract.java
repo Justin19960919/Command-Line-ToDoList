@@ -1,11 +1,12 @@
 /**
  * A class that represents a sales contract
  */
-public class SaleContract extends AbstractContract{
+public class SaleContract extends AbstractContract {
 
   /**
    * Constructor for a sales contract
-   * @param askingPrice  the asking price, a non negative integer
+   *
+   * @param askingPrice     the asking price, a non negative integer
    * @param negotiableOrNot whether or not the price is negotiable, a boolean flag
    * @throws NegativeValueException when asking price is negative
    */
@@ -13,4 +14,11 @@ public class SaleContract extends AbstractContract{
     super(askingPrice, negotiableOrNot);
   }
 
+  /**
+   * @return the total amount of the contract
+   */
+  @Override
+  public double getTotalPrice() {
+    return this.askingPrice;
+  }
 }
