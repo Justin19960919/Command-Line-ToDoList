@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 /**
  * A Listing class that has fields: properties and contract.
  * @param <T> A property with an upper bound of Abstract Properties
@@ -50,7 +52,42 @@ public class Listing <T extends AbstractProperties, U extends AbstractContract>{
     this.contract = contract;
   }
 
+  /**
+   * Compare this object with the given object
+   * @param o - the given object to compare
+   * @return true if the given object is equals to this object
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
+    Listing<?, ?> listing = (Listing<?, ?>) o;
+    return Objects.equals(this.property, listing.property) && Objects
+        .equals(this.contract, listing.contract);
+  }
 
+  /**
+   * Calculate the hashcode of this object
+   * @return the hashcode of this object
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.property, this.contract);
+  }
 
-
+  /**
+   * Returns a string representation of this object
+   * @return string representation of this object
+   */
+  @Override
+  public String toString() {
+    return "Listing{" +
+        "property=" + this.property +
+        ", contract=" + this.contract +
+        '}';
+  }
 }

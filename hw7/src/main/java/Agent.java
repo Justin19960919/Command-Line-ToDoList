@@ -85,6 +85,8 @@ public class Agent<P extends AbstractProperties, C extends AbstractContract> {
   }
 
   /**
+   * Calculate total portfolio value of the agent.
+   *
    * @return the amount of money the Agent would make if they successfully completed all listings in
    * their collection
    * @throws NonexistentListingException when the listing passed to method is not present in the *
@@ -98,4 +100,46 @@ public class Agent<P extends AbstractProperties, C extends AbstractContract> {
     return total;
   }
 
+  /**
+   * Compare this object with the given object
+   * @param o - the given object to compare
+   * @return true if the given object is equals to this object
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
+    Agent<?, ?> agent = (Agent<?, ?>) o;
+    return Double.compare(agent.commissionRate, this.commissionRate) == 0
+        && Double.compare(agent.totalEarnings, this.totalEarnings) == 0 && Objects
+        .equals(this.name, agent.name) && Objects
+        .equals(this.collectionOfCurrentListings, agent.collectionOfCurrentListings);
+  }
+
+  /**
+   * Calculate the hashcode of this object
+   * @return the hashcode of this object
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.name, this.collectionOfCurrentListings, this.commissionRate, this.totalEarnings);
+  }
+
+  /**
+   * Returns a string representation of this object
+   * @return string representation of this object
+   */
+  @Override
+  public String toString() {
+    return "Agent{" +
+        "name='" + this.name + '\'' +
+        ", collectionOfCurrentListings=" + this.collectionOfCurrentListings +
+        ", commissionRate=" + this.commissionRate +
+        ", totalEarnings=" + this.totalEarnings +
+        '}';
+  }
 }
