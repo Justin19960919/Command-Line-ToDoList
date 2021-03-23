@@ -26,7 +26,6 @@ public class RentalContract extends AbstractContract {
     this.termInMonths = termOnMonths;
   }
 
-
   /**
    * calculate the total price of this contract
    *

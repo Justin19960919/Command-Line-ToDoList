@@ -21,7 +21,7 @@ public class Commercial extends AbstractProperties {
   public Commercial(String address, Integer sizeInSqft, Integer numOfOffices,
       boolean suitableForRental) throws ValueOutOfRangeException {
     super(address, sizeInSqft);
-    this.checkValue(numOfOffices);  // non-negative
+    this.checkInteger(numOfOffices);  // non-negative
 
     this.numOfOffices = numOfOffices;
     this.suitableForRental = suitableForRental;

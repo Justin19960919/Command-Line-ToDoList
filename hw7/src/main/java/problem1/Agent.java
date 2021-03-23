@@ -19,31 +19,27 @@ public class Agent<P extends AbstractProperties, C extends AbstractContract> {
    *
    * @param name           the name of the agent, a string
    * @param commissionRate the commission rate of the agent, a double
+   * @throws ValueOutOfRangeException throw exception when commission rate is not between 0 and 1
    */
   public Agent(String name, double commissionRate) throws ValueOutOfRangeException {
     this.name = name;
     this.collectionOfCurrentListings = new ArrayList<>();
-    if (commissionRate < 0 || commissionRate > 1) {
-      throw new ValueOutOfRangeException("Commission rate has to be between 0 and 1.");
-    }
+    this.checkCommissionRate(commissionRate);
     this.commissionRate = commissionRate;
     this.totalEarnings = 0;
   }
 
-/* /**
-   * Constructor of the agent class
-   *
-   * @param name           the name of the agent, a string
-   * @param list           the agent's collection of listing
-   * @param commissionRate the commission rate of the agent, a double
-   *//*
-  public Agent(String name, List<Listing<P, C>> list, double commissionRate) {
-    this.name = name;
-    this.collectionOfCurrentListings = list;
-    this.commissionRate = commissionRate;
-    this.totalEarnings = 0;
-  }*/
-
+  /**
+   * Checks if commission rate is within 0 and 1.
+   * @param commissionRate the commission rate to check
+   * @throws ValueOutOfRangeException throw exception when commission rate is not between 0 and 1
+   */
+  private void checkCommissionRate(double commissionRate) throws ValueOutOfRangeException {
+    if (commissionRate < 0 || commissionRate > 1) {
+      throw new ValueOutOfRangeException("Commission rate has to be between 0 and 1.");
+    }
+  }
+  
   /**
    * Get the collectionOfCurrentListings;
    *

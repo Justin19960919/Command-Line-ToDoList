@@ -22,11 +22,22 @@ public class Residential extends AbstractProperties {
       Double numOfBathRooms) throws ValueOutOfRangeException {
     super(address, sizeInSqft);
 
-    this.checkValue(numOfBedRooms);   // non-negative
-    this.checkValue(numOfBathRooms);  // non-negative
+    super.checkInteger(numOfBedRooms);   // non-negative
+    this.checkDouble(numOfBathRooms);  // non-negative
 
     this.numOfBedRooms = numOfBedRooms;
     this.numOfBathRooms = numOfBathRooms;
+  }
+
+  /**
+   * Checks if the input value is less than 0, if yes, throw exception
+   * @param value a Double
+   * @throws ValueOutOfRangeException when value is less than 0
+   */
+  private void checkDouble(Double value) throws ValueOutOfRangeException {
+    if(value < 0){
+      throw new ValueOutOfRangeException("Value can not be less than 0.");
+    }
   }
 
   /**

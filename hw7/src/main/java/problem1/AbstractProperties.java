@@ -13,11 +13,11 @@ public abstract class AbstractProperties {
    * Constructor of the abstract properties class
    * @param address The address of the property, a String
    * @param sizeInSqft The size in square feet of the property, an Integer
-   * @throws ValueOutOfRangeException
+   * @throws ValueOutOfRangeException throw exception when sizeInSqft is negative
    */
   public AbstractProperties(String address, Integer sizeInSqft) throws ValueOutOfRangeException {
     this.address = address;
-    this.checkValue(sizeInSqft);  // checks if sizeInSqft is non negative
+    this.checkInteger(sizeInSqft);  // checks if sizeInSqft is non negative
     this.sizeInSqft = sizeInSqft;
   }
 
@@ -26,22 +26,12 @@ public abstract class AbstractProperties {
    * @param value an Integer
    * @throws ValueOutOfRangeException when value is less than 0
    */
-  protected void checkValue(Integer value) throws ValueOutOfRangeException {
+  protected static void checkInteger(Integer value) throws ValueOutOfRangeException {
     if(value < 0){
       throw new ValueOutOfRangeException("Value can not be less than 0.");
     }
   }
 
-  /**
-   * Checks if the input value is less than 0, if yes, throw exception
-   * @param value a Double
-   * @throws ValueOutOfRangeException when value is less than 0
-   */
-  protected void checkValue(Double value) throws ValueOutOfRangeException {
-    if(value < 0){
-      throw new ValueOutOfRangeException("Value can not be less than 0.");
-    }
-  }
 
   /**
    * Compare this object with the given object
