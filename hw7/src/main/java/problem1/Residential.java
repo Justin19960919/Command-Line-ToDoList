@@ -59,7 +59,7 @@ public class Residential extends AbstractProperties {
    */
   @Override
   public String toString() {
-    return "problem1.Residential" +
+    return "Residential" +
         super.toString() +
         "numOfBedRooms=" + this.numOfBedRooms +
         ", numOfBathRooms=" + this.numOfBathRooms +

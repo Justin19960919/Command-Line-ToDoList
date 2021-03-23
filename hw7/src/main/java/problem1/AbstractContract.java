@@ -58,7 +58,7 @@ public abstract class AbstractContract implements IContract {
    */
   @Override
   public String toString() {
-    return "problem1.AbstractContract{" +
+    return "Contract{" +
         "askingPrice=" + this.askingPrice +
         ", negotiableOrNot=" + this.negotiableOrNot +
         '}';

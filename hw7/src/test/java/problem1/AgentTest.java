@@ -23,6 +23,12 @@ public class AgentTest {
     listing = new Listing<>(residential, contract);
   }
 
+  @Test(expected = ValueOutOfRangeException.class)
+  public void setUpAgent() throws ValueOutOfRangeException {
+    agent = new Agent<>("bob", 1.1);
+  }
+
+
   @Test
   public void addListing() throws ValueOutOfRangeException {
     agent.addListing(listing);
@@ -62,19 +68,19 @@ public class AgentTest {
   }
 
   @Test
-  public void testNotEquals() {
+  public void testNotEquals() throws ValueOutOfRangeException {
     Agent agent1 = new Agent<AbstractProperties, AbstractContract>("Loo", 0.03);
     assertFalse(agent.equals(agent1));
   }
 
   @Test
-  public void testEquals() {
+  public void testEquals() throws ValueOutOfRangeException {
     Agent agent1 = new Agent<Residential, AbstractContract>("Bog", 0.03);
     assertTrue(agent.equals(agent1));
   }
 
   @Test
-  public void testHashCode() {
+  public void testHashCode() throws ValueOutOfRangeException {
     Agent agent1 = new Agent<Residential, AbstractContract>("Bog", 0.03);
     assertEquals(agent.hashCode(), agent1.hashCode());
   }

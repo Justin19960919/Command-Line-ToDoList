@@ -57,7 +57,7 @@ public class Commercial extends AbstractProperties {
    */
   @Override
   public String toString() {
-    return "problem1.Commercial" +
+    return "Commercial" +
         super.toString() +
         "numOfOffices=" + this.numOfOffices +
         ", suitableForRental=" + this.suitableForRental +

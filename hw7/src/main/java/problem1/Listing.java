@@ -31,27 +31,11 @@ public class Listing <T extends AbstractProperties, U extends AbstractContract> 
   }
 
   /**
-   * Setter of the property
-   * @param property A property object with a super class of abstract properties
-   */
-  public void setProperty(T property) {
-    this.property = property;
-  }
-
-  /**
    * Getter of contract
    * @return the contract of the listing
    */
   public U getContract() {
     return contract;
-  }
-
-  /**
-   * Setter of the contract
-   * @param contract A contract object with a super class of abstract contract
-   */
-  public void setContract(U contract) {
-    this.contract = contract;
   }
 
   /**
@@ -87,7 +71,7 @@ public class Listing <T extends AbstractProperties, U extends AbstractContract> 
    */
   @Override
   public String toString() {
-    return "problem1.Listing{" +
+    return "Listing{" +
         "property=" + this.property +
         ", contract=" + this.contract +
         '}';

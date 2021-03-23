@@ -20,9 +20,12 @@ public class Agent<P extends AbstractProperties, C extends AbstractContract> {
    * @param name           the name of the agent, a string
    * @param commissionRate the commission rate of the agent, a double
    */
-  public Agent(String name, double commissionRate) {
+  public Agent(String name, double commissionRate) throws ValueOutOfRangeException {
     this.name = name;
     this.collectionOfCurrentListings = new ArrayList<>();
+    if (commissionRate < 0 || commissionRate > 1) {
+      throw new ValueOutOfRangeException("Commission rate has to be between 0 and 1.");
+    }
     this.commissionRate = commissionRate;
     this.totalEarnings = 0;
   }
