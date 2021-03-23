@@ -1,20 +1,24 @@
+package problem1;
+
 /**
  * A class that represents a sales contract
  */
 public class SaleContract extends AbstractContract {
 
   /**
-   * Constructor for a sales contract
+   * Constructor for a sale contract
    *
    * @param askingPrice     the asking price, a non negative integer
    * @param negotiableOrNot whether or not the price is negotiable, a boolean flag
-   * @throws NegativeValueException when asking price is negative
+   * @throws ValueOutOfRangeException when asking price is negative
    */
-  public SaleContract(Double askingPrice, boolean negotiableOrNot) throws NegativeValueException {
+  public SaleContract(Double askingPrice, boolean negotiableOrNot) throws ValueOutOfRangeException {
     super(askingPrice, negotiableOrNot);
   }
 
   /**
+   * Calculate the total price of the contract
+   *
    * @return the total amount of the contract
    */
   @Override
