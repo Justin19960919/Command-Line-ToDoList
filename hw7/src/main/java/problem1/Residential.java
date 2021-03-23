@@ -1,9 +1,11 @@
+package problem1;
+
 import java.util.Objects;
 
 /**
  * Represents a residential property, inherits from Abstract properties
  */
-public class Residential extends AbstractProperties{
+public class Residential extends AbstractProperties {
 
   private Integer numOfBedRooms;
   private Double numOfBathRooms;
@@ -34,12 +36,6 @@ public class Residential extends AbstractProperties{
    */
   @Override
   public boolean equals(Object o) {
-    /*if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }*/
     if (!super.equals(o)) {
       return false;
     }
@@ -63,7 +59,7 @@ public class Residential extends AbstractProperties{
    */
   @Override
   public String toString() {
-    return "Residential" +
+    return "problem1.Residential" +
         super.toString() +
         "numOfBedRooms=" + this.numOfBedRooms +
         ", numOfBathRooms=" + this.numOfBathRooms +

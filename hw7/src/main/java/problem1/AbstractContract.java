@@ -1,15 +1,17 @@
+package problem1;
+
 import java.util.Objects;
 
 /**
  * A class that represents a contract, covering a sales contract and a rental contract.
  */
-public abstract class AbstractContract implements IContract{
+public abstract class AbstractContract implements IContract {
 
   protected Double askingPrice;
   protected boolean negotiableOrNot;
 
   /**
-   * Constructor for the AbstractContract class
+   * Constructor for the problem1.AbstractContract class
    * @param askingPrice  the asking price, a non negative integer
    * @param negotiableOrNot whether or not the price is negotiable, a boolean flag
    * @throws ValueOutOfRangeException when asking price is negative
@@ -56,7 +58,7 @@ public abstract class AbstractContract implements IContract{
    */
   @Override
   public String toString() {
-    return "AbstractContract{" +
+    return "problem1.AbstractContract{" +
         "askingPrice=" + this.askingPrice +
         ", negotiableOrNot=" + this.negotiableOrNot +
         '}';

@@ -1,3 +1,5 @@
+package problem1;
+
 /**
  * A class that represents a sales contract
  */

@@ -1,3 +1,5 @@
+package problem1;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,19 +27,37 @@ public class Agent<P extends AbstractProperties, C extends AbstractContract> {
     this.totalEarnings = 0;
   }
 
-  /**
+/* /**
    * Constructor of the agent class
    *
    * @param name           the name of the agent, a string
    * @param list           the agent's collection of listing
    * @param commissionRate the commission rate of the agent, a double
-   */
+   *//*
   public Agent(String name, List<Listing<P, C>> list, double commissionRate) {
     this.name = name;
     this.collectionOfCurrentListings = list;
     this.commissionRate = commissionRate;
     this.totalEarnings = 0;
+  }*/
+
+  /**
+   * Get the collectionOfCurrentListings;
+   *
+   * @return the collectionOfCurrentListings
+   */
+  public List<Listing<P, C>> getCollectionOfCurrentListings() {
+    return this.collectionOfCurrentListings;
   }
+
+  /**
+   * Get the total earnings
+   * @return the total earnings
+   */
+  public double getTotalEarnings() {
+    return this.totalEarnings;
+  }
+
 
   /**
    * add a new listing to the agent's collection
@@ -49,22 +69,16 @@ public class Agent<P extends AbstractProperties, C extends AbstractContract> {
   }
 
   /**
-   * Agent successfully make a sale/rental - remove a new listing from the agent's collection and
+   * problem1.Agent successfully make a sale/rental - remove a new listing from the agent's collection and
    * add the commission to the total earning
    *
    * @param listing a listing
    * @throws NonexistentListingException when the listing passed to method is not present in the
-   *                                     Agent’s collection.
+   *                                     problem1.Agent’s collection.
    */
   void completeListing(Listing<P, C> listing) throws NonexistentListingException {
-    for (Listing<P, C> l : this.collectionOfCurrentListings) {
-      if (l.equals(listing)) {
-        this.totalEarnings += l.getContract().getTotalPrice() * this.commissionRate;
-        this.collectionOfCurrentListings.remove(l);
-        return;
-      }
-    }
-    throw new NonexistentListingException();
+    dropListing(listing);
+    this.totalEarnings += listing.getContract().getTotalPrice() * this.commissionRate;
   }
 
   /**
@@ -72,7 +86,7 @@ public class Agent<P extends AbstractProperties, C extends AbstractContract> {
    *
    * @param listing a listing
    * @throws NonexistentListingException when the listing passed to method is not present in the *
-   *                                     Agent’s collection.
+   *                                     problem1.Agent’s collection.
    */
   void dropListing(Listing<P, C> listing) throws NonexistentListingException {
     for (Listing<P, C> l : this.collectionOfCurrentListings) {
@@ -87,15 +101,13 @@ public class Agent<P extends AbstractProperties, C extends AbstractContract> {
   /**
    * Calculate total portfolio value of the agent.
    *
-   * @return the amount of money the Agent would make if they successfully completed all listings in
-   * their collection
-   * @throws NonexistentListingException when the listing passed to method is not present in the *
-   *                                     Agent’s collection.
+   * @return the amount of money the problem1.Agent would make if they successfully completed all listings in
+   * their collection.
    */
-  double getTotalPortfolioValue() throws NonexistentListingException {
+  double getTotalPortfolioValue(){
     double total = 0.0;
     for (Listing<P, C> l : this.collectionOfCurrentListings) {
-      total += l.getContract().getTotalPrice();
+      total += l.getContract().getTotalPrice() * this.commissionRate;
     }
     return total;
   }

@@ -1,15 +1,17 @@
+package problem1;
+
 import java.util.Objects;
 
 /**
- * Represents a commerical property, inherits from Abstract properties
+ * Represents a commercial property, inherits from Abstract properties
  */
-public class Commercial extends AbstractProperties{
+public class Commercial extends AbstractProperties {
 
   private Integer numOfOffices;
   private boolean suitableForRental;
 
   /**
-   * Constructor of commerical property
+   * Constructor of commercial property
    * @param address the address of the property, a String
    * @param sizeInSqft the size in square feet of the property, a non negative Integer
    * @param numOfOffices number of offices of the property, a non negative Integer
@@ -55,7 +57,7 @@ public class Commercial extends AbstractProperties{
    */
   @Override
   public String toString() {
-    return "Commercial" +
+    return "problem1.Commercial" +
         super.toString() +
         "numOfOffices=" + this.numOfOffices +
         ", suitableForRental=" + this.suitableForRental +

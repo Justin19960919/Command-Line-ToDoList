@@ -1,17 +1,19 @@
+package problem1;
+
 import java.util.Objects;
 
 /**
- * A Listing class that has fields: properties and contract.
+ * A problem1.Listing class that has fields: properties and contract.
  * @param <T> A property with an upper bound of Abstract Properties
  * @param <U> A contract with an upper bound of Abstract Contract
  */
-public class Listing <T extends AbstractProperties, U extends AbstractContract>{
+public class Listing <T extends AbstractProperties, U extends AbstractContract> {
 
   private T property;
   private U contract;
 
   /**
-   * Constructor for Listing
+   * Constructor for problem1.Listing
    * @param property Any class with super class of Abstract Properties
    * @param contract Any class with super class of Abstract Contract
    */
@@ -85,7 +87,7 @@ public class Listing <T extends AbstractProperties, U extends AbstractContract>{
    */
   @Override
   public String toString() {
-    return "Listing{" +
+    return "problem1.Listing{" +
         "property=" + this.property +
         ", contract=" + this.contract +
         '}';

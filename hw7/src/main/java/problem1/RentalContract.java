@@ -1,9 +1,11 @@
+package problem1;
+
 import java.util.Objects;
 
 /**
  * A class that represents a rental contract
  */
-public class RentalContract extends AbstractContract{
+public class RentalContract extends AbstractContract {
   private Integer termInMonths;   // > 0
 
   /**
@@ -14,7 +16,7 @@ public class RentalContract extends AbstractContract{
    * @throws ValueOutOfRangeException when asking price is negative
    */
   public RentalContract(Double askingPrice, boolean negotiableOrNot, Integer termOnMonths)
-      throws ValueOutOfRangeException{
+      throws ValueOutOfRangeException {
     super(askingPrice, negotiableOrNot);
 
     // Check
