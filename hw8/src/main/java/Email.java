@@ -1,31 +1,33 @@
-public class Email {
+import java.util.HashMap;
+public class Email extends AbstractTemplate{
 
+  private String message;
   private Supporter supporter;
 
-  public Email(Supporter supporter) {
-    this.supporter = supporter;
+  public Email(String message, Supporter supporter) {
+    super(message, supporter);
   }
 
-  public String toEmail(){
+  // TODO throw exception if key is not in the hashmap
+  public String toTemplate(){
+    HashMap<String, String> supporterInfo = this.supporter.getSupporterInformation();
 
-    StringBuilder emailMessage = new StringBuilder("To:");
-    emailMessage.append(this.supporter.getEmail()).append("\n");
-    emailMessage.append("Subject: Spring sale!");
-    emailMessage.append("Dear ").append(this.supporter.getFirst_name()).append(" ").append(this.supporter.getLast_name()).append("\n");
-    emailMessage.append("Everything in our store will be 20% off between now and the end of April! "
-        + "Stock up on our logo mugs, T shirts, and water bottles to show your support and help "
-        + "raise awareness. Our magnets, plushies, and picture books, also make great gifts "
-        + "for the children in your life.").append("\n");
+    // Email header
+    StringBuilder email = new StringBuilder("To:");
+    email.append(supporterInfo.get("email")).append("\n");
+    email.append("Subject: Spring sale!");
+    email.append("Dear ").append(supporterInfo.get("first_name")).append(" ")
+        .append(supporterInfo.get("last_name")).append("\n");
 
-    emailMessage.append("Remember, all proceeds go to support our work and, "
-        + "if we can reach our goal of $10,000 in sales by the end of April, "
-        + "an anonymous donor has pledged to match every $1 you spend. "
-        + "Want to help out but don’t want to buy stuff? Visit our website to make a donation.").append("\n");
+    // append message specified in GenerateOutput
+    email.append(this.message);
+    return email.toString();
 
-    emailMessage.append("Sincerely,").append("\n");
-    emailMessage.append("Non-Profit Director");
-    return emailMessage.toString();
   }
+
+
+
+
 
 
 }

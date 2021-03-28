@@ -1,31 +1,32 @@
-public class Letter {
+import java.util.HashMap;
 
+public class Letter extends AbstractTemplate{
+
+  private String message;
   private Supporter supporter;
 
-  public Letter(Supporter supporter) {
-    this.supporter = supporter;
+  public Letter(String message, Supporter supporter) {
+    super(message, supporter);
   }
 
-  public String toLetter(){
+  // TODO throw exception if key is not in the hashmap
+  public String toTemplate(){
+    HashMap<String, String> supporterInfo = this.supporter.getSupporterInformation();
 
+    // Letter header
     StringBuilder letter = new StringBuilder();
-    letter.append(this.supporter.getFirst_name()).append(" ").append(this.supporter.getLast_name()).append("\n");
-    letter.append(this.supporter.getAddress()).append("\n");
-    letter.append(this.supporter.getCity()).append(", ").append(this.supporter.getState()).append(", ").append(this.supporter.getZip());
-    letter.append("Dear ").append(this.supporter.getFirst_name()).append(" ").append(this.supporter.getLast_name()).append(",\n");
+    letter.append(supporterInfo.get("first_name ")).append(supporterInfo.get("last_name"))
+        .append("\n");
+    letter.append(supporterInfo.get("address ")).append("\n");
+    letter.append(supporterInfo.get("city")).append(", ").append(supporterInfo.get("state"))
+        .append(", ").append(supporterInfo.get("zip"));
+    letter.append("Dear ").append(supporterInfo.get("first_name")).append(" ").
+        append(supporterInfo.get("last_name")).append(",\n");
 
-    letter.append("Everything in our store will be 20% off between now and the end of April! "
-        + "Stock up on our logo mugs, T shirts, and water bottles to show your support and help "
-        + "raise awareness. Our magnets, plushies, and picture books, also make great gifts "
-        + "for the children in your life.").append("\n");
 
-    letter.append("Remember, all proceeds go to support our work and, "
-        + "if we can reach our goal of $10,000 in sales by the end of April, "
-        + "an anonymous donor has pledged to match every $1 you spend. "
-        + "Want to help out but don’t want to buy stuff? Visit our website to make a donation.").append("\n");
-
-    letter.append("Sincerely,").append("\n");
-    letter.append("Non-Profit Director");
+    // append message specified in GenerateOutput
+    letter.append(this.message);
     return letter.toString();
   }
+
 }
