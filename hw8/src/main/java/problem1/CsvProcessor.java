@@ -1,4 +1,4 @@
-// File IO
+package problem1;// File IO
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
@@ -19,24 +19,24 @@ public class CsvProcessor{
   private String csvRoute;
 
   /**
-   * Constructor of the CsvProcessor class. Given an input path to the csv file,
+   * Constructor of the problem1.CsvProcessor class. Given an input path to the csv file,
    * output a ArrayList of supporters, which are rows in the csv
    * @param csvRoute The csv file's path, a String
    * @throws LengthUnequalException when the length of the fields, and the length
    * of the data entries differ
    */
-  public CsvProcessor(String csvRoute) throws LengthUnequalException{
+  public CsvProcessor(String csvRoute) throws LengthUnequalException {
     this.csvRoute = csvRoute;
     this.arrayOfSupporters = this.process();
   }
 
   /**
-   * Main function to process the csv file and output an ArrayList of Supporters
+   * problem1.Main function to process the csv file and output an ArrayList of Supporters
    * @return an ArrayList of Supporters
    * @throws LengthUnequalException when the length of the fields, and the length
    * of the data entries differ when processing
    */
-  private ArrayList<Supporter> process() throws LengthUnequalException{
+  private ArrayList<Supporter> process() throws LengthUnequalException {
     ArrayList<Supporter> supporters = new ArrayList<>();
 
     // process the csv route
@@ -45,7 +45,7 @@ public class CsvProcessor{
     try (BufferedReader inputFile = new BufferedReader(new FileReader(this.csvRoute));
     ){
 
-      /////// Main processing here ///////
+      /////// problem1.Main processing here ///////
 
       String dataEntry;     // a row of data
       String firstline = inputFile.readLine();
@@ -77,15 +77,15 @@ public class CsvProcessor{
   /**
    * Private helper function to the process() function, which takes a String array
    * of fields and an ArrayList of Strings that are the data points of that field,
-   * and returns a Supporter
+   * and returns a problem1.Supporter
    * @param fields The fields of the csv file, a String array
    * @param data The data of the corresponding fields, an ArrayList of Strings
-   * @return a Supporter object
+   * @return a problem1.Supporter object
    * @throws LengthUnequalException when the length of the fields, and the length
    * of the data entries differ when processing
    */
   private Supporter createSupporter(String[] fields, ArrayList<String> data)
-      throws LengthUnequalException{
+      throws LengthUnequalException {
 
     // check if length is equal
     int numberOfParameters = fields.length;

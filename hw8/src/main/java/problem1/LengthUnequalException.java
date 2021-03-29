@@ -1,3 +1,5 @@
+package problem1;
+
 /**
  * Represents an exception when two arrays have unequal lengths,
  * used when we iterate using the array length
