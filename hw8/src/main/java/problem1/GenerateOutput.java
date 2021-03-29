@@ -1,3 +1,5 @@
+package problem1;
+
 public class GenerateOutput {
 
 
@@ -8,7 +10,7 @@ public class GenerateOutput {
 
 
 
-  // Message to put into Email and Letter
+  // Message to put into problem1.Email and problem1.Letter
   public static void main(String[] args){
     StringBuilder message = new StringBuilder();
     // message

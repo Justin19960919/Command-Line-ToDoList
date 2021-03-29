@@ -1,14 +1,16 @@
+package problem1;
+
 import java.util.HashMap;
 
 /**
- * A Supporter class that represents a supporter of the non-profit organization
+ * A problem1.Supporter class that represents a supporter of the non-profit organization
  */
 public class Supporter {
 
   HashMap <String, String> supporterInformation = new HashMap<String, String>();
 
   /**
-   * Constructor of the Supporter class.
+   * Constructor of the problem1.Supporter class.
    * Uses a HashMap to save the information of the supporters in key-value pairs.
    */
   public Supporter(){
@@ -26,7 +28,7 @@ public class Supporter {
 
   /**
    * Getter of the supporters information
-   * @return a HashMap that describes the Supporter
+   * @return a HashMap that describes the problem1.Supporter
    */
   public HashMap<String, String> getSupporterInformation() {
     return supporterInformation;
@@ -39,7 +41,7 @@ public class Supporter {
    */
   @Override
   public String toString() {
-    final StringBuilder sb = new StringBuilder("Supporter{");
+    final StringBuilder sb = new StringBuilder("problem1.Supporter{");
     sb.append("supporterInformation=");
     // loop over hashmap
     for(String i: this.supporterInformation.keySet()){

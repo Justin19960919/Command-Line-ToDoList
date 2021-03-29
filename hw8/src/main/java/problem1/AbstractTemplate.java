@@ -1,3 +1,5 @@
+package problem1;
+
 /**
  * An abstract class that represents a template that is generated for supporters.
  */
