@@ -51,14 +51,7 @@ public class CsvProcessor{
       String firstline = inputFile.readLine();
       // String array
       String[] parameters = firstline.split(",");
-      int count = 0;
       while ((dataEntry = inputFile.readLine()) != null) {
-
-        // if first line, then it is the header, we skip
-        if(count == 0){
-          count ++;
-          continue;
-        }
         // regex split
         ArrayList<String> splitResults = this.regexSplit(dataEntry);
         // create supporter
@@ -68,8 +61,6 @@ public class CsvProcessor{
 
         // add supporter to Arraylist
         supporters.add(supporter);
-        // increment
-        count ++;
       }
       //////////////////////////////////////
     }catch (FileNotFoundException fnfe) {
