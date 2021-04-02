@@ -7,14 +7,14 @@ import java.util.HashMap;
  */
 public class Supporter {
 
-  HashMap <String, String> supporterInformation = new HashMap<String, String>();
+  HashMap <String, String> supporterInformation;
 
   /**
    * Constructor of the problem1.Supporter class.
    * Uses a HashMap to save the information of the supporters in key-value pairs.
    */
   public Supporter(){
-    this.supporterInformation = supporterInformation;
+    this.supporterInformation = new HashMap<String, String>();
   }
 
   /**

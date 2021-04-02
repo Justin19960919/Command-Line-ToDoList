@@ -106,6 +106,16 @@ public class CommandLineParser {
     }
   }
 
+  //-------------//-------------//-------------//-------------//-------------//-------------
+  public String getOutput() {
+    return this.output;
+  }
+
+  public String getTemplate() {//-------------//-------------//-------------
+    return this.emailTemplate == null? this.letterTemplate : this.emailTemplate;
+  }
+
+
   /**
    * Compare this object with the given object.
    *

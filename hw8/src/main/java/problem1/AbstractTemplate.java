@@ -1,28 +1,123 @@
 package problem1;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+import jdk.swing.interop.SwingInterOpUtils;
+
 /**
  * An abstract class that represents a template that is generated for supporters.
  */
 public abstract class AbstractTemplate {
-
-  protected String message;
-  protected Supporter supporter;
+  protected String fileName;
+  protected List<Supporter> supporters;
+  protected String outputDir;
 
   /**
    * Constructor of Abstract Template.
-   * @param message Message for the template
-   * @param supporter A supporter object to use the fields to fill in spaces in the template
+   * @param fileName Message for the template
+   * @param supporters A list of supporters object to use the fields to fill in spaces in the template
    */
-  public AbstractTemplate(String message, Supporter supporter) {
-    this.message = message;
-    this.supporter = supporter;
+  public AbstractTemplate(String fileName, List<Supporter> supporters, String outputDir) {//-------------//-------------//-------------
+    this.fileName = fileName;
+    this.supporters = supporters;
+    this.outputDir = outputDir;
   }
 
   /**
    * Abstract method that generates the whole template
    * @return a String, which is the information inside the template
    */
-  public abstract String toTemplate();
+//  public abstract String toTemplate();
 
+  //-------------//-------------//-------------
+  public String readTemplate() {
+    StringBuilder template = new StringBuilder();
+    BufferedReader inputFile = null;
+    try {
+      inputFile = new BufferedReader(new FileReader(this.fileName));
 
+      String line;
+      while ((line = inputFile.readLine()) != null) {
+
+        template.append(line);
+        template.append("\n");
+      }
+    } catch (FileNotFoundException fnfe) {
+      System.out.println("*** OOPS! A file was not found : " + fnfe.getMessage());
+    } catch (IOException ioe) {
+      System.out.println("Something went wrong! : " + ioe.getMessage());
+    } finally {
+      if (inputFile != null) {
+        try {
+          inputFile.close();
+        } catch (IOException e) {
+          System.out.println("Failed to close input stream");
+        }
+      }
+    }
+    return template.toString();
+  }
+
+  ////-------------//-------------//-------------//-------------//-------------
+  protected String getName(Supporter s, int i){
+    for(String str :s.getSupporterInformation().keySet()){
+      if(str.contains("first") && str.contains("name")){
+        return s.getSupporterInformation().get(str).replace("\"", "");
+      }
+    }
+    return String.valueOf(i);
+  }
+
+  ////-------------//-------------//-------------//-------------//-------------
+  public abstract String getFileName(String name);
+
+  //-------------//-------------//-------------//-------------//-------------
+  public void writeOutput(){
+    int i = 1;
+    for(Supporter s : this.supporters){
+      String name = this.getName(s, i++);
+      try{
+        File f = new File(this.getFileName(name));
+        f.createNewFile();
+//        if (f.createNewFile()) {
+//          System.out.println("File created: " + f.getName());
+//        } else {
+//          System.out.println("File already exists.");
+//        }
+        FileWriter file = new FileWriter(f);
+
+        String[] lines = this.generateOutput(s).split("\\n");
+        for(String line: lines) {
+          file.write(line + "\n");
+          file.flush();
+        }
+      }catch (FileNotFoundException fnfe) {
+        System.out.println("A file was not found : " + fnfe.getMessage());
+        fnfe.printStackTrace();
+      } catch (IOException ioe) {
+        System.out.println("Something went wrong! : " + ioe.getMessage());
+        ioe.printStackTrace();
+      }
+    }
+  }
+
+  //-------------//-------------//-------------//-------------//-------------
+  public String generateOutput(Supporter s) {
+    StringBuilder template = new StringBuilder(this.readTemplate());
+    String leftBracket = "[";
+    String rightBracket = "]";
+    while(template.indexOf(leftBracket) != -1){
+      int start = template.indexOf(leftBracket);
+      int end = template.indexOf(rightBracket) + 2;
+      String key = "\"" + template.substring(start+2, end-2) + "\"";
+      template.replace(start, end, s.getSupporterInformation().get(key));
+    }
+    return template.toString();
+  }
 }
