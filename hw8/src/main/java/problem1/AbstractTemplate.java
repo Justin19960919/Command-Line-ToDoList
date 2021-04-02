@@ -1,14 +1,12 @@
 package problem1;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import jdk.swing.interop.SwingInterOpUtils;
 
 /**
  * An abstract class that represents a template that is generated for supporters.
@@ -23,19 +21,17 @@ public abstract class AbstractTemplate {
    * @param fileName Message for the template
    * @param supporters A list of supporters object to use the fields to fill in spaces in the template
    */
-  public AbstractTemplate(String fileName, List<Supporter> supporters, String outputDir) {//-------------//-------------//-------------
+  public AbstractTemplate(String fileName, List<Supporter> supporters, String outputDir) {
     this.fileName = fileName;
     this.supporters = supporters;
     this.outputDir = outputDir;
   }
 
-  /**
-   * Abstract method that generates the whole template
-   * @return a String, which is the information inside the template
-   */
-//  public abstract String toTemplate();
 
-  //-------------//-------------//-------------
+  /**
+   * read the file and convert it to a Paragraph as a string
+   * @return the context of the file as a string
+   */
   public String readTemplate() {
     StringBuilder template = new StringBuilder();
     BufferedReader inputFile = null;
@@ -64,7 +60,12 @@ public abstract class AbstractTemplate {
     return template.toString();
   }
 
-  ////-------------//-------------//-------------//-------------//-------------
+  /**
+   * get the name of the the supporter, if not found, use number instead.
+   * @param s support object
+   * @param i rank of the supporter, used if name not found
+   * @return the first name of the supporter
+   */
   protected String getName(Supporter s, int i){
     for(String str :s.getSupporterInformation().keySet()){
       if(str.contains("first") && str.contains("name")){
@@ -74,10 +75,16 @@ public abstract class AbstractTemplate {
     return String.valueOf(i);
   }
 
-  ////-------------//-------------//-------------//-------------//-------------
+  /**
+   * get the output file name
+   * @param name output path
+   * @return the output file name
+   */
   public abstract String getFileName(String name);
 
-  //-------------//-------------//-------------//-------------//-------------
+  /**
+   * create a new file and write the output to it
+   */
   public void writeOutput(){
     int i = 1;
     for(Supporter s : this.supporters){
@@ -85,11 +92,6 @@ public abstract class AbstractTemplate {
       try{
         File f = new File(this.getFileName(name));
         f.createNewFile();
-//        if (f.createNewFile()) {
-//          System.out.println("File created: " + f.getName());
-//        } else {
-//          System.out.println("File already exists.");
-//        }
         FileWriter file = new FileWriter(f);
 
         String[] lines = this.generateOutput(s).split("\\n");
@@ -107,7 +109,11 @@ public abstract class AbstractTemplate {
     }
   }
 
-  //-------------//-------------//-------------//-------------//-------------
+  /**
+   * generate the output by replacing the all placeholders with the appropriate value
+   * @param s supporter object
+   * @return the output after all placeholders replaced
+   */
   public String generateOutput(Supporter s) {
     StringBuilder template = new StringBuilder(this.readTemplate());
     String leftBracket = "[";
