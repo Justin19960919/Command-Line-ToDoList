@@ -12,19 +12,18 @@ public class Email extends AbstractTemplate {
    * @param fileName The message in the problem1.Email, a String
    * @param supporters THe recipient of the email, a problem1.Supporter object
    */
-  public Email(String fileName, List<Supporter> supporters, String outputDir) {//-------------//-------------//-------------
-    super(fileName, supporters, outputDir);//-------------//-------------//-------------
+  public Email(String fileName, List<Supporter> supporters, String outputDir) {
+    super(fileName, supporters, outputDir);
   }
 
   /**
    * get the output file name
-   * @param name output path
+   * @param name name of the supporter
    * @return the output file name
    */
   @Override
   public String getFileName(String name) {
-    //outputDir +
-    return "EmailTo" + name + ".txt";
+    return "Email To " + name + ".txt";
   }
 
 

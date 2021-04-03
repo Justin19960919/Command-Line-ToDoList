@@ -19,13 +19,12 @@ public class Letter extends AbstractTemplate {
 
   /**
    * get the output file name
-   * @param name output path
+   * @param name name of the supporter
    * @return the output file name
    */
   @Override
   public String getFileName(String name) {
-    //outputDir+
-    return "LetterTo" + name + ".txt";
+    return "Letter To " + name + ".txt";
   }
 
 }

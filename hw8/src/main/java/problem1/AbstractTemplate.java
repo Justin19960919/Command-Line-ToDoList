@@ -77,7 +77,7 @@ public abstract class AbstractTemplate {
 
   /**
    * get the output file name
-   * @param name output path
+   * @param name name of the supporter
    * @return the output file name
    */
   public abstract String getFileName(String name);
@@ -90,7 +90,7 @@ public abstract class AbstractTemplate {
     for(Supporter s : this.supporters){
       String name = this.getName(s, i++);
       try{
-        File f = new File(this.getFileName(name));
+        File f = new File(getDir(), this.getFileName(name));
         f.createNewFile();
         FileWriter file = new FileWriter(f);
 
@@ -125,5 +125,9 @@ public abstract class AbstractTemplate {
       template.replace(start, end, s.getSupporterInformation().get(key));
     }
     return template.toString();
+  }
+
+  public String getDir(){
+    return outputDir;
   }
 }
