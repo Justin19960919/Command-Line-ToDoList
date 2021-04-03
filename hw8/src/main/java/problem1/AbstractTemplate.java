@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * An abstract class that represents a template that is generated for supporters.
@@ -129,5 +130,33 @@ public abstract class AbstractTemplate {
 
   public String getDir(){
     return outputDir;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    AbstractTemplate that = (AbstractTemplate) o;
+    return fileName.equals(that.fileName) &&
+        supporters.equals(that.supporters) &&
+        outputDir.equals(that.outputDir);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(fileName, supporters, outputDir);
+  }
+
+  @Override
+  public String toString() {
+    return "AbstractTemplate{" +
+        "fileName='" + fileName + '\'' +
+        ", supporters=" + supporters +
+        ", outputDir='" + outputDir + '\'' +
+        '}';
   }
 }
