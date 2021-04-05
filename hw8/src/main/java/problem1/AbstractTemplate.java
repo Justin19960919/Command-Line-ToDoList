@@ -100,7 +100,7 @@ public abstract class AbstractTemplate {
           file.write(line + "\n");
           file.flush();
         }
-      }catch (FileNotFoundException fnfe) {
+      } catch (FileNotFoundException fnfe) {
         System.out.println("A file was not found : " + fnfe.getMessage());
         fnfe.printStackTrace();
       } catch (IOException ioe) {

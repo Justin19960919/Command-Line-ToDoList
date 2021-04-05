@@ -57,7 +57,7 @@ public class CsvProcessor{
         // create supporter
         Supporter supporter = createSupporter(parameters, splitResults);
         // validate (print out supporter information)
-        System.out.println(supporter.toString());
+        // System.out.println(supporter.toString());
 
         // add supporter to Arraylist
         supporters.add(supporter);
