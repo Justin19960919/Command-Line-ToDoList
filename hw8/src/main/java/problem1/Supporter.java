@@ -1,6 +1,7 @@
 package problem1;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * A problem1.Supporter class that represents a supporter of the non-profit organization
@@ -45,10 +46,35 @@ public class Supporter {
     sb.append("supporterInformation=");
     // loop over hashmap
     for(String i: this.supporterInformation.keySet()){
-      sb.append(i).append(" ").append(this.supporterInformation.get(i)).append("\n");
+      sb.append(i).append(":").append(this.supporterInformation.get(i)).append(";");
     }
     sb.append('}');
     return sb.toString();
   }
 
+  /**
+   * Equals method
+   * @param o another object
+   * @return a boolean (True/ False)
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Supporter supporter = (Supporter) o;
+    return this.getSupporterInformation().equals(supporter.getSupporterInformation());
+  }
+
+  /**
+   * Hashcode() method
+   * @return an integer, the hashcode of the supporter
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.getSupporterInformation());
+  }
 }
