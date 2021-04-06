@@ -70,7 +70,7 @@ public abstract class AbstractTemplate {
   protected String getName(Supporter s, int i){
     for(String str :s.getSupporterInformation().keySet()){
       if(str.contains("first") && str.contains("name")){
-        return s.getSupporterInformation().get(str).replace("\"", "");
+        return s.getSupporterInformation().get(str).replace("\"", "");//remove double quotation mark
       }
     }
     return String.valueOf(i);
