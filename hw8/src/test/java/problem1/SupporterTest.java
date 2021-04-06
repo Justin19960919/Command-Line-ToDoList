@@ -44,4 +44,10 @@ public class SupporterTest {
     assertEquals("problem1.Supporter{supporterInformation=A:B;C:D;E:F;}", supporter.toString());
     assertEquals("problem1.Supporter{supporterInformation=}", supporter2.toString());
   }
+
+  @Test
+  public void testEquals(){
+    assertEquals(supporter, supporter);
+    assertNotEquals(supporter, supporter2);
+  }
 }
