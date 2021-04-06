@@ -57,7 +57,7 @@ public class CsvProcessor{
         // create supporter
         Supporter supporter = createSupporter(parameters, splitResults);
         // validate (print out supporter information)
-        System.out.println(supporter.toString());
+        // System.out.println(supporter.toString());
 
         // add supporter to Arraylist
         supporters.add(supporter);
@@ -87,6 +87,8 @@ public class CsvProcessor{
   private Supporter createSupporter(String[] fields, ArrayList<String> data)
       throws LengthUnequalException {
 
+    // System.out.println("Number of params: "+ fields.length);
+    // System.out.println("Number of data fields: "+ data.size());
     // check if length is equal
     int numberOfParameters = fields.length;
     if(data.size() != numberOfParameters){
@@ -97,6 +99,7 @@ public class CsvProcessor{
     for(int i = 0; i < numberOfParameters; i++){
       supporter.addItem(fields[i], data.get(i));
     }
+
     return supporter;
   }
 

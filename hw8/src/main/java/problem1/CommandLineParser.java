@@ -6,6 +6,7 @@ import java.util.Objects;
  * Represents command line parser that process and validate command line arguments.
  */
 public class CommandLineParser {
+  private static final int PROCESSED_TWO_ARGS = 2;
   private static final String EMAIL = "--email";
   private static final String EMAIL_TEMPLATE = "--email-template";
   private static final String LETTER = "--letter";
@@ -46,6 +47,94 @@ public class CommandLineParser {
   }
 
   /**
+   * Process email command
+   *
+   * @param args - the given arguments
+   * @param i - the starting point to process
+   * @throws InvalidArgumentException - throws exception for invalid argument
+   */
+  private void processEmail(String[] args, int i) throws InvalidArgumentException {
+    if (args[i].equals(EMAIL)){
+      // email command followed by email template
+      if (i + 1 < args.length && args[i + 1].equals(EMAIL_TEMPLATE)) {
+        i += 1;
+        // email template followed by template file, not next command line argument
+        if (i + 1 < args.length && !args[i + 1].startsWith("--")) {
+          i += 1;
+          this.emailTemplate = args[i];
+        } else {
+          throw new InvalidArgumentException("Error: --email-template provided but no template file was given");
+        }
+      } else {
+        throw new InvalidArgumentException("Error: --email provided but no --email-template was given");
+      }
+    } else { // handle the case that --email-template is given but no --email command before it
+      throw new InvalidArgumentException("Error: --email-template given but no --email was given before it");
+    }
+  }
+
+  /**
+   * Process letter command
+   *
+   * @param args - the given arguments
+   * @param i - the starting point to process
+   * @throws InvalidArgumentException - throws exception for invalid argument
+   */
+  private void processLetter(String[] args, int i) throws InvalidArgumentException {
+    if (args[i].equals(LETTER)) {
+      // letter command followed by letter template
+      if (i + 1 < args.length && args[i + 1].equals(LETTER_TEMPLATE)) {
+        i += 1;
+        // letter template followed by template file, not another command line argument
+        if (i + 1 < args.length && !args[i + 1].startsWith("--")) {
+          i += 1;
+          this.letterTemplate = args[i];
+        } else {
+          throw new InvalidArgumentException("Error: --letter-template provided but no template file was given");
+        }
+      } else {
+        throw new InvalidArgumentException("Error: --letter provided but no --letter-template was given");
+      }
+    } else { // handle the case that --letter-template given but no --letter command before it
+      throw new InvalidArgumentException("Error: --letter-template given but no --letter before it");
+    }
+  }
+
+  /**
+   * Process output dir command
+   *
+   * @param args - the given arguments
+   * @param i - the starting point to process
+   * @throws InvalidArgumentException - throws exception for invalid argument
+   */
+  private void processOutput(String[] args, int i) throws InvalidArgumentException {
+    // --output-dir followed by a path, not another command line argument
+    if (i + 1 < args.length && !args[i + 1].startsWith("--")) {
+      i += 1;
+      this.output = args[i];
+    } else {
+      throw new InvalidArgumentException("Error: --output-dir provided but no path was given");
+    }
+  }
+
+  /**
+   * Process csv command
+   *
+   * @param args - the given arguments
+   * @param i - the starting point to process
+   * @throws InvalidArgumentException - throws exception for invalid argument
+   */
+  private void processCsv(String[] args, int i) throws InvalidArgumentException {
+    // --csv-file followed by a file not another command line argument
+    if (i + 1 < args.length && !args[i + 1].startsWith("--")) {
+      i += 1;
+      this.csv = args[i];
+    } else {
+      throw new InvalidArgumentException("Error: --csv-file provided but no file was given");
+    }
+  }
+
+  /**
    * Process the given arguments.
    *
    * @param args - the command line arguments.
@@ -56,65 +145,61 @@ public class CommandLineParser {
     int i = 0;
     while (i < args.length) {
       // process email
-      if (args[i].equals(EMAIL)) {
-        // email command followed by email template
-        if (i + 1 < args.length && args[i + 1].equals(EMAIL_TEMPLATE)) {
-          i += 1;
-          // email template followed by template file
-          if (i + 1 < args.length) {
-            i += 1;
-            this.emailTemplate = args[i];
-          } else {
-            throw new InvalidArgumentException("Error: --email-template provided but no template file was given");
-          }
-        } else {
-          throw new InvalidArgumentException("Error: --email provided but no --email-template was given");
-        }
+      if (args[i].startsWith(EMAIL)) {
+        this.processEmail(args, i);
+        i += PROCESSED_TWO_ARGS;
         // process letter
-      } else if (args[i].equals(LETTER)) {
-        // letter command followed by letter template
-        if (i + 1 < args.length && args[i + 1].equals(LETTER_TEMPLATE)) {
-          i += 1;
-          // letter template followed by template file
-          if (i + 1 < args.length) {
-            i += 1;
-            this.letterTemplate = args[i];
-          } else {
-            throw new InvalidArgumentException("Error: --letter-template provided but no template file was given");
-          }
-        } else {
-          throw new InvalidArgumentException("Error: --letter provided but no --letter-template was given");
-        }
+      } else if (args[i].startsWith(LETTER)) {
+        this.processLetter(args, i);
+        i += PROCESSED_TWO_ARGS;
         // process output dir
       } else if (args[i].equals(OUTPUT)) {
-        if (i + 1 < args.length) {
-          i += 1;
-          this.output = args[i];
-        } else {
-          throw new InvalidArgumentException("Error: --output-dir provided but no path was given");
-        }
+        this.processOutput(args, i);
+        i += 1;
         // process csv file
       } else if (args[i].equals(CSV)) {
-        if (i + 1 < args.length) {
-          i += 1;
-          this.csv = args[i];
-        } else {
-          throw new InvalidArgumentException("Error: --csv-file provided but no file was given");
-        }
+        this.processCsv(args, i);
+        i += 1;
       }
       i += 1;
     }
   }
 
-  //-------------//-------------//-------------//-------------//-------------//-------------
+  /**
+   * Get the output dir.
+   *
+   * @return - the output directory
+   */
   public String getOutput() {
     return this.output;
   }
 
-  public String getTemplate() {//-------------//-------------//-------------
-    return this.emailTemplate == null? this.letterTemplate : this.emailTemplate;
+  /**
+   * Get the email template
+   *
+   * @return - the email template
+   */
+  public String getEmailTemplate() {
+    return this.emailTemplate;
   }
 
+  /**
+   * Get the letter template
+   *
+   * @return - the letter template
+   */
+  public String getLetterTemplate() {
+    return this.letterTemplate;
+  }
+
+  /**
+   * Get the csv file
+   *
+   * @return - the csv file name
+   */
+  public String getCsv() {
+    return this.csv;
+  }
 
   /**
    * Compare this object with the given object.

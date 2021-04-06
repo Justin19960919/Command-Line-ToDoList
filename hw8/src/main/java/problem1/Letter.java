@@ -14,6 +14,7 @@ public class Letter extends AbstractTemplate {
    */
   public Letter(String fileName, List<Supporter> supporters, String outputDir) {
     super(fileName, supporters, outputDir);
+
   }
 
 
