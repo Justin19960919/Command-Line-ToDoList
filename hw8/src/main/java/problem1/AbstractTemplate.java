@@ -13,6 +13,10 @@ import java.util.Objects;
  * An abstract class that represents a template that is generated for supporters.
  */
 public abstract class AbstractTemplate {
+  private static final int INITIAL = 1;
+  private static final int INVALID_INDEX = -1;
+  private static final int OFFSET = 2;
+
   protected String fileName;
   protected List<Supporter> supporters;
   protected String outputDir;
@@ -22,6 +26,7 @@ public abstract class AbstractTemplate {
    * Constructor of Abstract Template.
    * @param fileName Message for the template
    * @param supporters A list of supporters object to use the fields to fill in spaces in the template
+   * @param outputDir output file directory
    */
   public AbstractTemplate(String fileName, List<Supporter> supporters, String outputDir) {
     this.fileName = fileName;
@@ -34,9 +39,8 @@ public abstract class AbstractTemplate {
 
   /**
    * read the file and convert it to a Paragraph as a string
-   * @return the context of the file as a string
    */
-  public void readTemplate() {
+  public final void readTemplate() {
     BufferedReader inputFile = null;
     try {
       inputFile = new BufferedReader(new FileReader(this.fileName));
@@ -88,7 +92,7 @@ public abstract class AbstractTemplate {
    * create a new file and write the output to it
    */
   public void writeOutput(){
-    int i = 1;
+    int i = INITIAL;
     for(Supporter s : this.supporters){
       String name = this.getName(s, i++);
       try{
@@ -120,44 +124,65 @@ public abstract class AbstractTemplate {
     StringBuilder template = new StringBuilder(this.template);
     String leftBracket = "[";
     String rightBracket = "]";
-    while(template.indexOf(leftBracket) != -1){
+    while(template.indexOf(leftBracket) != INVALID_INDEX){
       int start = template.indexOf(leftBracket);
-      int end = template.indexOf(rightBracket) + 2;
-      String key = "\"" + template.substring(start+2, end-2) + "\"";
+      int end = template.indexOf(rightBracket) + OFFSET;
+      String key = "\"" + template.substring(start + OFFSET, end - OFFSET) + "\"";
       template.replace(start, end, s.getSupporterInformation().get(key));
     }
     return template.toString();
   }
 
+  /**
+   * Get the output directory
+   *
+   * @return the output directory
+   */
   public String getDir(){
-    return outputDir;
+    return this.outputDir;
   }
 
+  /**
+   * Compare this object with the given object.
+   *
+   * @param o - the given object to compare with
+   * @return - true if this is equal to the given object
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (o == null || this.getClass() != o.getClass()) {
       return false;
     }
     AbstractTemplate that = (AbstractTemplate) o;
-    return fileName.equals(that.fileName) &&
-        supporters.equals(that.supporters) &&
-        outputDir.equals(that.outputDir);
+    return this.fileName.equals(that.fileName) &&
+        this.supporters.equals(that.supporters) &&
+        this.outputDir.equals(that.outputDir);
   }
 
+  /**
+   * Calculate the hashcode of this object.
+   *
+   * @return - the hash code of this object.
+   */
   @Override
   public int hashCode() {
-    return Objects.hash(fileName, supporters, outputDir);
+    return Objects.hash(this.fileName, this.supporters, this.outputDir);
   }
 
+  /**
+   * Get string representation of this object.
+   *
+   * @return - string representation of this object.
+   */
   @Override
   public String toString() {
     return "AbstractTemplate{" +
-        "fileName='" + fileName + '\'' +
-        ", supporters=" + supporters +
-        ", outputDir='" + outputDir + '\'' +
+        "fileName='" + this.fileName + '\'' +
+        ", supporters=" + this.supporters +
+        ", outputDir='" + this.outputDir + '\'' +
         '}';
   }
 }

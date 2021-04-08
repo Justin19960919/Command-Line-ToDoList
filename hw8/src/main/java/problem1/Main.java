@@ -1,7 +1,7 @@
 package problem1;
 
 public class Main {
-
+  private static Options options = new Options();
   /**
    * The main function to carry out the whole process
    *
@@ -10,16 +10,21 @@ public class Main {
    * @throws InvalidArgumentException - throw exception if argument is invalid
    */
   public static void main(String[] args) throws LengthUnequalException, InvalidArgumentException {
-    CommandLineParser parser = new CommandLineParser(args);
-    CsvProcessor csv = new CsvProcessor(parser.getCsv());
-    if (parser.getLetterTemplate() != null) {
-      AbstractTemplate letters = new Letter(parser.getLetterTemplate(), csv.getArrayOfSupporters(), parser.getOutput());
-      letters.writeOutput();
+    try {
+      CommandLineParser parser = new CommandLineParser(options, args);
+      CsvProcessor csv = new CsvProcessor(parser.getCsv());
+      if (parser.getLetterTemplate() != null) {
+        AbstractTemplate letters = new Letter(parser.getLetterTemplate(), csv.getArrayOfSupporters(), parser.getOutput());
+        letters.writeOutput();
+      }
+      if (parser.getEmailTemplate() != null) {
+        AbstractTemplate emails = new Email(parser.getEmailTemplate(), csv.getArrayOfSupporters(), parser.getOutput());
+        emails.writeOutput();
+      }
+    } catch (InvalidArgumentException e) {
+      System.out.print(e.getMessage());
     }
-    if (parser.getEmailTemplate() != null) {
-      AbstractTemplate emails = new Email(parser.getEmailTemplate(), csv.getArrayOfSupporters(), parser.getOutput());
-      emails.writeOutput();
-    }
+
   }
 
 

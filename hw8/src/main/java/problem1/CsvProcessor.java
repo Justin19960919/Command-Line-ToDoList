@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 // regex
+import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -40,31 +41,26 @@ public class CsvProcessor{
     ArrayList<Supporter> supporters = new ArrayList<>();
 
     // process the csv route
-    // System.out.println(System.getProperty("user.dir")); // Sanity check
-
-    try (BufferedReader inputFile = new BufferedReader(new FileReader(this.csvRoute));
+    try (BufferedReader inputFile = new BufferedReader(new FileReader(this.csvRoute))
     ){
 
       /////// problem1.Main processing here ///////
 
       String dataEntry;     // a row of data
-      String firstline = inputFile.readLine();
+      String firstLine = inputFile.readLine();
       // String array
-      String[] parameters = firstline.split(",");
+      String[] parameters = firstLine.split(",");
       while ((dataEntry = inputFile.readLine()) != null) {
         // regex split
         ArrayList<String> splitResults = this.regexSplit(dataEntry);
         // create supporter
         Supporter supporter = createSupporter(parameters, splitResults);
-        // validate (print out supporter information)
-        // System.out.println(supporter.toString());
-
         // add supporter to Arraylist
         supporters.add(supporter);
       }
       //////////////////////////////////////
     }catch (FileNotFoundException fnfe) {
-      System.out.println("*** OUPS! A file was not found : " + fnfe.getMessage());
+      System.out.println("*** OOPS! A file was not found : " + fnfe.getMessage());
       fnfe.printStackTrace();
     } catch (IOException ioe) {
       System.out.println("Something went wrong! : " + ioe.getMessage());
@@ -86,9 +82,6 @@ public class CsvProcessor{
    */
   private Supporter createSupporter(String[] fields, ArrayList<String> data)
       throws LengthUnequalException {
-
-    // System.out.println("Number of params: "+ fields.length);
-    // System.out.println("Number of data fields: "+ data.size());
     // check if length is equal
     int numberOfParameters = fields.length;
     if(data.size() != numberOfParameters){
@@ -131,6 +124,47 @@ public class CsvProcessor{
     return arrayOfSupporters;
   }
 
+  /**
+   * Compare this object with the given object.
+   *
+   * @param o - the given object to compare with
+   * @return - true if this is equal to the given object
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
+    CsvProcessor that = (CsvProcessor) o;
+    return Objects.equals(this.arrayOfSupporters, that.arrayOfSupporters) && Objects
+        .equals(this.csvRoute, that.csvRoute);
+  }
+
+  /**
+   * Calculate the hashcode of this object.
+   *
+   * @return - the hash code of this object.
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.arrayOfSupporters, this.csvRoute);
+  }
+
+  /**
+   * Get string representation of this object.
+   *
+   * @return - string representation of this object.
+   */
+  @Override
+  public String toString() {
+    return "CsvProcessor{" +
+        "arrayOfSupporters=" + this.arrayOfSupporters +
+        ", csvRoute='" + this.csvRoute + '\'' +
+        '}';
+  }
 }
 
 

@@ -60,6 +60,36 @@ public class CsvProcessorTest {
     assertEquals(supporters, csv1.getArrayOfSupporters());
   }
 
+  @Test
+  public void testEqualsSelf() {
+    assertTrue(csv1.equals(csv1));
+  }
 
+  @Test
+  public void testNotEqualsNull() {
+    assertFalse(csv1.equals(null));
+  }
 
+  @Test
+  public void testNotEquals() {
+    assertFalse(csv1.equals(supporter1));
+  }
+
+  @Test
+  public void testEquals() throws LengthUnequalException {
+    CsvProcessor csv2 = new CsvProcessor("test1.csv");
+    assertTrue(csv1.equals(csv2));
+  }
+
+  @Test
+  public void testHashcode() throws LengthUnequalException {
+    CsvProcessor csv2 = new CsvProcessor("test1.csv");
+    assertEquals(csv1.hashCode(), csv2.hashCode());
+  }
+
+  @Test
+  public void testToString() {
+    String s = "CsvProcessor{arrayOfSupporters=[problem1.Supporter{supporterInformation=\"company_name\":\"Benton, John B Jr\";\"address\":\"6649 N Blue Gum St\";\"state\":\"LA\";\"email\":\"jbutt@gmail.com\";\"first_name\":\"James\";\"phone1\":\"504-621-8927\";\"phone2\":\"504-845-1427\";\"web\":\"http://www.bentonjohnbjr.com\";\"county\":\"Orleans\";\"last_name\":\"Butt\";\"zip\":\"70116\";\"city\":\"New Orleans\";}], csvRoute='test1.csv'}";
+    assertEquals(s, csv1.toString());
+  }
 }
