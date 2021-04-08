@@ -16,6 +16,7 @@ public abstract class AbstractTemplate {
   protected String fileName;
   protected List<Supporter> supporters;
   protected String outputDir;
+  protected StringBuilder template;
 
   /**
    * Constructor of Abstract Template.
@@ -26,6 +27,8 @@ public abstract class AbstractTemplate {
     this.fileName = fileName;
     this.supporters = supporters;
     this.outputDir = outputDir;
+    this.template = new StringBuilder();
+    this.readTemplate();
   }
 
 
@@ -33,8 +36,7 @@ public abstract class AbstractTemplate {
    * read the file and convert it to a Paragraph as a string
    * @return the context of the file as a string
    */
-  public String readTemplate() {
-    StringBuilder template = new StringBuilder();
+  public void readTemplate() {
     BufferedReader inputFile = null;
     try {
       inputFile = new BufferedReader(new FileReader(this.fileName));
@@ -42,8 +44,8 @@ public abstract class AbstractTemplate {
       String line;
       while ((line = inputFile.readLine()) != null) {
 
-        template.append(line);
-        template.append("\n");
+        this.template.append(line);
+        this.template.append("\n");
       }
     } catch (FileNotFoundException fnfe) {
       System.out.println("*** OOPS! A file was not found : " + fnfe.getMessage());
@@ -58,7 +60,6 @@ public abstract class AbstractTemplate {
         }
       }
     }
-    return template.toString();
   }
 
   /**
@@ -67,7 +68,7 @@ public abstract class AbstractTemplate {
    * @param i rank of the supporter, used if name not found
    * @return the first name of the supporter
    */
-  protected String getName(Supporter s, int i){
+  private String getName(Supporter s, int i){
     for(String str :s.getSupporterInformation().keySet()){
       if(str.contains("first") && str.contains("name")){
         return s.getSupporterInformation().get(str).replace("\"", "");
@@ -116,7 +117,7 @@ public abstract class AbstractTemplate {
    * @return the output after all placeholders replaced
    */
   public String generateOutput(Supporter s) {
-    StringBuilder template = new StringBuilder(this.readTemplate());
+    StringBuilder template = new StringBuilder(this.template);
     String leftBracket = "[";
     String rightBracket = "]";
     while(template.indexOf(leftBracket) != -1){

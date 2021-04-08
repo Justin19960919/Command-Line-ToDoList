@@ -29,21 +29,6 @@ public class AbstractTemplateTest {
   }
 
   @Test
-  public void testReadTemplate() {
-    String letter = "[[first_name]] for testing letter\n";
-    String email = "[[first_name]] for testing email\n";
-
-    assertEquals(letter, l.readTemplate());
-    assertEquals(email, e.readTemplate());
-  }
-
-  @Test
-  public void testTestGetName() {
-    assertEquals("ZZZ", l.getName(s1, 1));
-    assertEquals("ZZZ", e.getName(s1, 1));
-  }
-
-  @Test
   public void testGetFileName() {
     assertEquals("Letter To ZZZ.txt", l.getFileName("ZZZ"));
     assertEquals("Email To YYY.txt", e.getFileName("YYY"));
