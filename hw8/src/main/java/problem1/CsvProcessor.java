@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 // regex
+import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -40,8 +41,6 @@ public class CsvProcessor{
     ArrayList<Supporter> supporters = new ArrayList<>();
 
     // process the csv route
-    // System.out.println(System.getProperty("user.dir")); // Sanity check
-
     try (BufferedReader inputFile = new BufferedReader(new FileReader(this.csvRoute));
     ){
 
@@ -56,9 +55,6 @@ public class CsvProcessor{
         ArrayList<String> splitResults = this.regexSplit(dataEntry);
         // create supporter
         Supporter supporter = createSupporter(parameters, splitResults);
-        // validate (print out supporter information)
-        // System.out.println(supporter.toString());
-
         // add supporter to Arraylist
         supporters.add(supporter);
       }
@@ -86,9 +82,6 @@ public class CsvProcessor{
    */
   private Supporter createSupporter(String[] fields, ArrayList<String> data)
       throws LengthUnequalException {
-
-    // System.out.println("Number of params: "+ fields.length);
-    // System.out.println("Number of data fields: "+ data.size());
     // check if length is equal
     int numberOfParameters = fields.length;
     if(data.size() != numberOfParameters){
@@ -131,6 +124,47 @@ public class CsvProcessor{
     return arrayOfSupporters;
   }
 
+  /**
+   * Compare this object with the given object.
+   *
+   * @param o - the given object to compare with
+   * @return - true if this is equal to the given object
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
+    CsvProcessor that = (CsvProcessor) o;
+    return Objects.equals(this.arrayOfSupporters, that.arrayOfSupporters) && Objects
+        .equals(this.csvRoute, that.csvRoute);
+  }
+
+  /**
+   * Calculate the hashcode of this object.
+   *
+   * @return - the hash code of this object.
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.arrayOfSupporters, this.csvRoute);
+  }
+
+  /**
+   * Get string representation of this object.
+   *
+   * @return - string representation of this object.
+   */
+  @Override
+  public String toString() {
+    return "CsvProcessor{" +
+        "arrayOfSupporters=" + this.arrayOfSupporters +
+        ", csvRoute='" + this.csvRoute + '\'' +
+        '}';
+  }
 }
 
 

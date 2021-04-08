@@ -1,37 +1,52 @@
 package problem1;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
  * Represents command line parser that process and validate command line arguments.
  */
 public class CommandLineParser {
-  private static final int PROCESSED_TWO_ARGS = 2;
-  private static final String EMAIL = "--email";
-  private static final String EMAIL_TEMPLATE = "--email-template";
-  private static final String LETTER = "--letter";
-  private static final String LETTER_TEMPLATE = "--letter-template";
-  private static final String OUTPUT = "--output-dir";
-  private static final String CSV = "--csv-file";
+  private static final int INITIAL_VALUE = 0;
+  private static final int INCREMENT = 1;
 
-  private String output;
-  private String csv;
-  private String emailTemplate;
-  private String letterTemplate;
+  private Options options;
+  private List<String> cmdArgs; // store original commandline args that passed in
+  private Map<String, String> arguments; // store validated arguments
 
   /**
    * Construct a new commandline parser object with the given parameters.
    *
+   * @param options - the list of option that the program can process
    * @param args - the command line arguments
    * @throws InvalidArgumentException - throw exception if argument is invalid
    */
-  public CommandLineParser(String[] args) throws InvalidArgumentException {
-    this.output = null;
-    this.csv = null;
-    this.emailTemplate = null;
-    this.letterTemplate = null;
-    this.processArgs(args);
-    this.validateOutputAndCsv(); // checks if output and csv have value;
+  public CommandLineParser(Options options, String[] args) throws InvalidArgumentException {
+    this.cmdArgs = new ArrayList<>(Arrays.asList(args)); // convert args into an ArrayList
+    this.options = options;
+    this.arguments = new HashMap<>();
+    this.processArgs();
+    this.validateOutputAndCsv(); // checks if output command and csv command is in the map;
+    this.validateLetterAndEmail(Options.LETTER); // validate letter and letter template command
+    this.validateLetterAndEmail(Options.EMAIL); // validate email and email template command
+    this.processLeftOver(); // process left over args in the command line arguments
+  }
+
+  /**
+   * Checks if there are any arguments left after the processArgs() is finished
+   *
+   * @throws InvalidArgumentException - throw exception if there are any arguments left
+   */
+  private void processLeftOver() throws InvalidArgumentException {
+    // if there are any arguments left after finishing processArgs()
+    if (this.cmdArgs.size() > INITIAL_VALUE) {
+      System.out.println(this.cmdArgs.size());
+      throw new InvalidArgumentException("invalid arguments that can not be processed are provided.");
+    }
   }
 
   /**
@@ -41,127 +56,66 @@ public class CommandLineParser {
    * @throws InvalidArgumentException - throw exception if output or csv is null
    */
   private void validateOutputAndCsv() throws InvalidArgumentException {
-    if (this.output == null || this.csv == null) {
-      throw new InvalidArgumentException("Error: --output-dir and --csv-file are required commands");
+    if (!this.arguments.containsKey(Options.OUTPUT) || !this.arguments.containsKey(Options.CSV)) {
+      throw new InvalidArgumentException("--output-dir and --csv-file are required commands");
+    }
+  }
+
+  private void validateLetterAndEmail(String cmd) throws InvalidArgumentException {
+    String template = cmd + "-template";
+    // eg: --email is given but --email-template is not given
+    if (this.arguments.containsKey(cmd) && !this.arguments.containsKey(template)) {
+      throw new InvalidArgumentException(cmd + " is provided but no " + template + " is given");
+      // eg: --email-template is given but --email is not given
+    } else if (this.arguments.containsKey(template) && !this.arguments.containsKey(cmd)) {
+      throw new InvalidArgumentException(template + " is given but no " + cmd + " is provided");
     }
   }
 
   /**
-   * Process email command
+   * Process the commandline arguments.
    *
-   * @param args - the given arguments
-   * @param i - the starting point to process
-   * @throws InvalidArgumentException - throws exception for invalid argument
-   */
-  private void processEmail(String[] args, int i) throws InvalidArgumentException {
-    if (args[i].equals(EMAIL)){
-      // email command followed by email template
-      if (i + 1 < args.length && args[i + 1].equals(EMAIL_TEMPLATE)) {
-        i += 1;
-        // email template followed by template file, not next command line argument
-        if (i + 1 < args.length && !args[i + 1].startsWith("--")) {
-          i += 1;
-          this.emailTemplate = args[i];
-        } else {
-          throw new InvalidArgumentException("Error: --email-template provided but no template file was given");
-        }
-      } else {
-        throw new InvalidArgumentException("Error: --email provided but no --email-template was given");
-      }
-    } else { // handle the case that --email-template is given but no --email command before it
-      throw new InvalidArgumentException("Error: --email-template given but no --email was given before it");
-    }
-  }
-
-  /**
-   * Process letter command
-   *
-   * @param args - the given arguments
-   * @param i - the starting point to process
-   * @throws InvalidArgumentException - throws exception for invalid argument
-   */
-  private void processLetter(String[] args, int i) throws InvalidArgumentException {
-    if (args[i].equals(LETTER)) {
-      // letter command followed by letter template
-      if (i + 1 < args.length && args[i + 1].equals(LETTER_TEMPLATE)) {
-        i += 1;
-        // letter template followed by template file, not another command line argument
-        if (i + 1 < args.length && !args[i + 1].startsWith("--")) {
-          i += 1;
-          this.letterTemplate = args[i];
-        } else {
-          throw new InvalidArgumentException("Error: --letter-template provided but no template file was given");
-        }
-      } else {
-        throw new InvalidArgumentException("Error: --letter provided but no --letter-template was given");
-      }
-    } else { // handle the case that --letter-template given but no --letter command before it
-      throw new InvalidArgumentException("Error: --letter-template given but no --letter before it");
-    }
-  }
-
-  /**
-   * Process output dir command
-   *
-   * @param args - the given arguments
-   * @param i - the starting point to process
-   * @throws InvalidArgumentException - throws exception for invalid argument
-   */
-  private void processOutput(String[] args, int i) throws InvalidArgumentException {
-    // --output-dir followed by a path, not another command line argument
-    if (i + 1 < args.length && !args[i + 1].startsWith("--")) {
-      i += 1;
-      this.output = args[i];
-    } else {
-      throw new InvalidArgumentException("Error: --output-dir provided but no path was given");
-    }
-  }
-
-  /**
-   * Process csv command
-   *
-   * @param args - the given arguments
-   * @param i - the starting point to process
-   * @throws InvalidArgumentException - throws exception for invalid argument
-   */
-  private void processCsv(String[] args, int i) throws InvalidArgumentException {
-    // --csv-file followed by a file not another command line argument
-    if (i + 1 < args.length && !args[i + 1].startsWith("--")) {
-      i += 1;
-      this.csv = args[i];
-    } else {
-      throw new InvalidArgumentException("Error: --csv-file provided but no file was given");
-    }
-  }
-
-  /**
-   * Process the given arguments.
-   *
-   * @param args - the command line arguments.
    * @throws InvalidArgumentException - throw exception if "email" command is not followed by "email-template"
    * or "letter" command is not followed by "letter-template".
    */
-  private void processArgs(String[] args) throws InvalidArgumentException {
-    int i = 0;
-    while (i < args.length) {
-      // process email
-      if (args[i].startsWith(EMAIL)) {
-        this.processEmail(args, i);
-        i += PROCESSED_TWO_ARGS;
-        // process letter
-      } else if (args[i].startsWith(LETTER)) {
-        this.processLetter(args, i);
-        i += PROCESSED_TWO_ARGS;
-        // process output dir
-      } else if (args[i].equals(OUTPUT)) {
-        this.processOutput(args, i);
-        i += 1;
-        // process csv file
-      } else if (args[i].equals(CSV)) {
-        this.processCsv(args, i);
-        i += 1;
+  private void processArgs() throws InvalidArgumentException {
+    int i = INITIAL_VALUE;
+    while (i < options.getOptions().size()) {
+      String cmdName = options.getOptions().get(i).getCmd();
+      Boolean takeValue = options.getOptions().get(i).getTakeValue();
+      String toBeRemoved = null; // place holder to store the argument that needs to be removed from the list
+      String toBeRemoved2 = null; // place holder to store the argument that needs to be removed from the list
+      // for each option, see if it can be found in the commandline args
+      for (int j = INITIAL_VALUE; j < this.cmdArgs.size(); j++) {
+        String cmdArg = this.cmdArgs.get(j);
+        if (cmdName.equals(cmdArg)) {
+          // if the command needs to take a value
+          if (takeValue) {
+            // cmdArg is followed by its value, not another commandline argument
+            if (j + INCREMENT < this.cmdArgs.size() && !this.cmdArgs.get(j + INCREMENT).startsWith("--")) {
+              this.arguments.put(cmdName, this.cmdArgs.get(j + INCREMENT));
+              toBeRemoved = cmdArg;
+              toBeRemoved2 = this.cmdArgs.get(j + INCREMENT);
+              break;
+            } else {
+              throw new InvalidArgumentException(cmdArg + " is provided but no value is given");
+            }
+            // if the command does not need to take a value
+          } else {
+            this.arguments.put(cmdName, null);
+            toBeRemoved = cmdArg;
+            break;
+          }
+        }
       }
-      i += 1;
+      // remove argument from the list
+      if (toBeRemoved != null) {
+        this.cmdArgs.remove(toBeRemoved);
+      }
+      if (toBeRemoved2 != null) {
+        this.cmdArgs.remove(toBeRemoved2);
+      }
+      i++;
     }
   }
 
@@ -171,7 +125,7 @@ public class CommandLineParser {
    * @return - the output directory
    */
   public String getOutput() {
-    return this.output;
+    return this.arguments.get(Options.OUTPUT);
   }
 
   /**
@@ -180,7 +134,10 @@ public class CommandLineParser {
    * @return - the email template
    */
   public String getEmailTemplate() {
-    return this.emailTemplate;
+    if (this.arguments.containsKey(Options.EMAIL_TEMPLATE)) {
+      return this.arguments.get(Options.EMAIL_TEMPLATE);
+    }
+    return null;
   }
 
   /**
@@ -189,7 +146,10 @@ public class CommandLineParser {
    * @return - the letter template
    */
   public String getLetterTemplate() {
-    return this.letterTemplate;
+    if (this.arguments.containsKey(Options.LETTER_TEMPLATE)) {
+      return this.arguments.get(Options.LETTER_TEMPLATE);
+    }
+    return null;
   }
 
   /**
@@ -198,7 +158,7 @@ public class CommandLineParser {
    * @return - the csv file name
    */
   public String getCsv() {
-    return this.csv;
+    return this.arguments.get(Options.CSV);
   }
 
   /**
@@ -216,9 +176,8 @@ public class CommandLineParser {
       return false;
     }
     CommandLineParser that = (CommandLineParser) o;
-    return Objects.equals(this.output, that.output) && Objects.equals(this.csv, that.csv)
-        && Objects.equals(this.emailTemplate, that.emailTemplate) && Objects
-        .equals(this.letterTemplate, that.letterTemplate);
+    return Objects.equals(this.options, that.options) && Objects
+        .equals(this.cmdArgs, that.cmdArgs) && Objects.equals(this.arguments, that.arguments);
   }
 
   /**
@@ -228,7 +187,7 @@ public class CommandLineParser {
    */
   @Override
   public int hashCode() {
-    return Objects.hash(this.output, this.csv, this.emailTemplate, this.letterTemplate);
+    return Objects.hash(this.options, this.cmdArgs, this.arguments);
   }
 
   /**
@@ -239,10 +198,9 @@ public class CommandLineParser {
   @Override
   public String toString() {
     return "CommandLineParser{" +
-        "output='" + this.output + '\'' +
-        ", csv='" + this.csv + '\'' +
-        ", emailTemplate='" + this.emailTemplate + '\'' +
-        ", letterTemplate='" + this.letterTemplate + '\'' +
+        "options=" + this.options +
+        ", cmdArgs=" + this.cmdArgs +
+        ", arguments=" + this.arguments +
         '}';
   }
 }

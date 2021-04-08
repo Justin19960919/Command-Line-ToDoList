@@ -10,6 +10,7 @@ public class InvalidArgumentException extends Exception{
       + "Examples:\n"
       + "--email --email-template email-template.txt --output-dir emails --csv-file customer.csv\n"
       + "--letter --letter-template letter-template.txt --output-dir letters --csv-file customer.csv";
+  private String message;
 
   /**
    * Constructs a new exception with {@code null} as its detail message. The cause is not initialized,
@@ -18,6 +19,18 @@ public class InvalidArgumentException extends Exception{
    * @message - the given error message
    */
   public InvalidArgumentException(String message) {
-    super(message + S);
+    super(message);
+    this.message = message;
+  }
+
+  /**
+   * Returns the detail message string of this throwable.
+   *
+   * @return the detail message string of this {@code Throwable} instance (which may be {@code
+   * null}).
+   */
+  @Override
+  public String getMessage() {
+    return "Error message: " + message + S;
   }
 }
