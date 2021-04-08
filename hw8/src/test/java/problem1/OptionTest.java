@@ -41,6 +41,12 @@ public class OptionTest {
   }
 
   @Test
+  public void testNotEquals() {
+    option1 = new Option("--email", true);
+    assertFalse(option.equals(option1));
+  }
+
+  @Test
   public void testHashCode() {
     option1 = new Option("--email", false);
     assertEquals(option.hashCode(), option1.hashCode());
@@ -48,7 +54,7 @@ public class OptionTest {
 
   @Test
   public void testToString() {
-    String s = "";
+    String s = "Option{cmd='--email', takeValue=false}";
     assertEquals(s, option.toString());
   }
 }

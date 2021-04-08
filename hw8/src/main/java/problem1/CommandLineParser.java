@@ -44,7 +44,6 @@ public class CommandLineParser {
   private void processLeftOver() throws InvalidArgumentException {
     // if there are any arguments left after finishing processArgs()
     if (this.cmdArgs.size() > INITIAL_VALUE) {
-      System.out.println(this.cmdArgs.size());
       throw new InvalidArgumentException("invalid arguments that can not be processed are provided.");
     }
   }

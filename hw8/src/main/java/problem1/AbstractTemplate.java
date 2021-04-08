@@ -26,6 +26,7 @@ public abstract class AbstractTemplate {
    * Constructor of Abstract Template.
    * @param fileName Message for the template
    * @param supporters A list of supporters object to use the fields to fill in spaces in the template
+   * @param outputDir output file directory
    */
   public AbstractTemplate(String fileName, List<Supporter> supporters, String outputDir) {
     this.fileName = fileName;
@@ -38,9 +39,8 @@ public abstract class AbstractTemplate {
 
   /**
    * read the file and convert it to a Paragraph as a string
-   * @return the context of the file as a string
    */
-  public void readTemplate() {
+  public final void readTemplate() {
     BufferedReader inputFile = null;
     try {
       inputFile = new BufferedReader(new FileReader(this.fileName));

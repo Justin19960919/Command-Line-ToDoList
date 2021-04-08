@@ -11,6 +11,7 @@ public class Letter extends AbstractTemplate {
    * Constructor of the problem1.Letter class
    * @param fileName The message in the problem1.Letter, a String
    * @param supporters The recipient of the letter, a problem1.Supporter object
+   * @param outputDir the directory of output files
    */
   public Letter(String fileName, List<Supporter> supporters, String outputDir) {
     super(fileName, supporters, outputDir);

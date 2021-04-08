@@ -1,7 +1,7 @@
 package problem1;
 
 public class Main {
-
+  private static Options options = new Options();
   /**
    * The main function to carry out the whole process
    *
@@ -11,7 +11,6 @@ public class Main {
    */
   public static void main(String[] args) throws LengthUnequalException, InvalidArgumentException {
     try {
-      Options options = new Options();
       CommandLineParser parser = new CommandLineParser(options, args);
       CsvProcessor csv = new CsvProcessor(parser.getCsv());
       if (parser.getLetterTemplate() != null) {

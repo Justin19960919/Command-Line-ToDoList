@@ -11,6 +11,7 @@ public class Email extends AbstractTemplate {
    * Constructor of the problem1.Email class
    * @param fileName The message in the problem1.Email, a String
    * @param supporters THe recipient of the email, a problem1.Supporter object
+   * @param outputDir directory of output files
    */
   public Email(String fileName, List<Supporter> supporters, String outputDir) {
     super(fileName, supporters, outputDir);
