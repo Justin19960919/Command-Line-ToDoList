@@ -62,7 +62,6 @@ public class AbstractTemplateTest {
         }
       }
     }
-    System.out.println(sb.toString());
     assertEquals("ZZZ YYY for testing email\n", sb.toString());
 
   }

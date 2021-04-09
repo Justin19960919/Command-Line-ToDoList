@@ -55,8 +55,6 @@ public class CsvProcessorTest {
     supporter1.addItem("\"email\"", "\"jbutt@gmail.com\"");
     supporter1.addItem("\"web\"", "\"http://www.bentonjohnbjr.com\"");
     supporters.add(supporter1);
-    System.out.println(supporters.size());
-    System.out.println(csv1.getArrayOfSupporters().size());
     assertEquals(supporters, csv1.getArrayOfSupporters());
   }
 
