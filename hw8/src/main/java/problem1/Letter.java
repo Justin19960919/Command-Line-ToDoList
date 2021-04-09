@@ -25,7 +25,7 @@ public class Letter extends AbstractTemplate {
    */
   @Override
   public String getFileName(String name) {
-    return "Letter To " + name + ".txt";
+    return "LetterTo" + name + ".txt";
   }
 
 }

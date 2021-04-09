@@ -24,7 +24,7 @@ public class Email extends AbstractTemplate {
    */
   @Override
   public String getFileName(String name) {
-    return "Email To " + name + ".txt";
+    return "EmailTo" + name + ".txt";
   }
 
 

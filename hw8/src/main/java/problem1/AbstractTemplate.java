@@ -73,9 +73,17 @@ public abstract class AbstractTemplate {
    * @return the first name of the supporter
    */
   private String getName(Supporter s, int i){
+    String first = "";
+    String last = "";
     for(String str :s.getSupporterInformation().keySet()){
       if(str.contains("first") && str.contains("name")){
-        return s.getSupporterInformation().get(str).replace("\"", "");
+        first = s.getSupporterInformation().get(str).replace("\"", "");
+      }
+      if(str.contains("last") && str.contains("name")){
+        last = s.getSupporterInformation().get(str).replace("\"", "");
+      }
+      if(first.length() != 0 && last.length() != 0){
+        return first+last;
       }
     }
     return String.valueOf(i);

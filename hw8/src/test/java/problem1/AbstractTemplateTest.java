@@ -23,6 +23,7 @@ public class AbstractTemplateTest {
     supporters = new ArrayList<>();
     s1 = new Supporter();
     s1.addItem("\"first_name\"", "ZZZ"); //double quotation mark!!
+    s1.addItem("\"last_name\"", "YYY");
     supporters.add(s1);
     l = new Letter("letter-template-test.txt", supporters, "output/");
     e = new Email("email-template-test.txt", supporters, "output/");
@@ -30,8 +31,8 @@ public class AbstractTemplateTest {
 
   @Test
   public void testGetFileName() {
-    assertEquals("Letter To ZZZ.txt", l.getFileName("ZZZ"));
-    assertEquals("Email To YYY.txt", e.getFileName("YYY"));
+    assertEquals("LetterToZZZ.txt", l.getFileName("ZZZ"));
+    assertEquals("EmailToYYY.txt", e.getFileName("YYY"));
   }
 
   @Test
@@ -40,7 +41,7 @@ public class AbstractTemplateTest {
     StringBuilder sb = new StringBuilder();
     BufferedReader inputFile = null;
     try {
-      inputFile = new BufferedReader(new FileReader(e.outputDir + "Email To ZZZ.txt"));
+      inputFile = new BufferedReader(new FileReader(e.outputDir + "EmailToZZZYYY.txt"));
 
       String line;
       while ((line = inputFile.readLine()) != null) {
@@ -62,14 +63,14 @@ public class AbstractTemplateTest {
       }
     }
     System.out.println(sb.toString());
-    assertEquals("ZZZ for testing email\n", sb.toString());
+    assertEquals("ZZZ YYY for testing email\n", sb.toString());
 
   }
 
   @Test
   public void testGenerateOutput() {
-    String letter = "ZZZ for testing letter\n";
-    String email = "ZZZ for testing email\n";
+    String letter = "ZZZ YYY for testing letter\n";
+    String email = "ZZZ YYY for testing email\n";
     assertEquals(letter, l.generateOutput(s1));
     assertEquals(email, e.generateOutput(s1));
   }
@@ -102,6 +103,6 @@ public class AbstractTemplateTest {
 
   @Test
   public void testTestToString() {
-    assertEquals("AbstractTemplate{fileName='email-template-test.txt', supporters=[problem1.Supporter{supporterInformation=\"first_name\":ZZZ;}], outputDir='output/'}", e.toString());
+    assertEquals("AbstractTemplate{fileName='email-template-test.txt', supporters=[problem1.Supporter{supporterInformation=\"first_name\":ZZZ;\"last_name\":YYY;}], outputDir='output/'}", e.toString());
   }
 }
