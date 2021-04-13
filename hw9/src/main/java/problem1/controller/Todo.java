@@ -1,4 +1,4 @@
-package problem1.Controller;
+package problem1.controller;
 
 public class Todo {
 

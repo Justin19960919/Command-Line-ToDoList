@@ -1,6 +1,6 @@
 package problem1.view;
 
-import problem1.Controller.TodoApplication;
+import problem1.controller.TodoApplication;
 import problem1.model.CommandLineParser;
 import problem1.model.InvalidArgumentException;
 import problem1.model.Options;
@@ -21,6 +21,10 @@ public class Main {
       CommandLineParser parser = new CommandLineParser(options, args);
       TodoApplication tda = new TodoApplication(parser);
       tda.writeFile();
+
+
+
+
     } catch (InvalidArgumentException e) {
       System.out.print(e.getMessage());
     }
