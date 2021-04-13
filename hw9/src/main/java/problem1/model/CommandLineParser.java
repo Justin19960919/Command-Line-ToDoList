@@ -17,6 +17,7 @@ public class CommandLineParser {
   private Options options;
   private List<String> cmdArgs; // store original commandline args that passed in
   private Map<String, List<String>> arguments; // store validated arguments
+
   /**
    * Construct a new commandline parser object with the given parameters.
    *
@@ -61,7 +62,8 @@ public class CommandLineParser {
                 .startsWith("--")) {
               String value = this.cmdArgs.get(j + INCREMENT);
               // if the map does contain the key
-              if (this.arguments.containsKey(cmdName)) { // command like "--complete-todo" can appear more than once
+              if (this.arguments.containsKey(
+                  cmdName)) { // command like "--complete-todo" can appear more than once
                 this.arguments.get(cmdArg).add(value);
               } else {
                 ArrayList<String> lst = new ArrayList<>();
@@ -98,7 +100,8 @@ public class CommandLineParser {
   }
 
   private void validateTodoText() throws InvalidArgumentException {
-    if (this.arguments.containsKey(Options.ADD_TODO) && !this.arguments.containsKey(Options.TODO_TEXT)) {
+    if (this.arguments.containsKey(Options.ADD_TODO) && !this.arguments
+        .containsKey(Options.TODO_TEXT)) {
       throw new InvalidArgumentException("--add-todo provided but no --todo-text given");
     }
   }
@@ -106,18 +109,23 @@ public class CommandLineParser {
   private void validateDisplay() throws InvalidArgumentException {
     // --display not given
     if (!this.arguments.containsKey(Options.DISPLAY)) {
-      if (this.arguments.containsKey(Options.SHOW_CATEGORY) || this.arguments.containsKey(Options.SHOW_INCOMPLETE)
-        || this.arguments.containsKey(Options.SORT_BY_DATE) || this.arguments.containsKey(Options.SORT_BY_PRIORITY)) {
+      if (this.arguments.containsKey(Options.SHOW_CATEGORY) || this.arguments
+          .containsKey(Options.SHOW_INCOMPLETE)
+          || this.arguments.containsKey(Options.SORT_BY_DATE) || this.arguments
+          .containsKey(Options.SORT_BY_PRIORITY)) {
         throw new InvalidArgumentException("--display is not given");
       }
     }
   }
 
   private void validateSort() throws InvalidArgumentException {
-    if (this.arguments.containsKey(Options.SORT_BY_DATE) && this.arguments.containsKey(Options.SORT_BY_PRIORITY)) {
-      throw new InvalidArgumentException("--sort-by-date cannot be combined with --sort-by-priority");
+    if (this.arguments.containsKey(Options.SORT_BY_DATE) && this.arguments
+        .containsKey(Options.SORT_BY_PRIORITY)) {
+      throw new InvalidArgumentException(
+          "--sort-by-date cannot be combined with --sort-by-priority");
     }
   }
+
   /**
    * Checks if there are any arguments left after the processArgs() is finished
    *
@@ -137,6 +145,7 @@ public class CommandLineParser {
 
   /**
    * Checks if --add-todo is given
+   *
    * @return - true if --add-todo is given
    */
   public Boolean getAddTodo() {
@@ -182,6 +191,7 @@ public class CommandLineParser {
 
   /**
    * get the list of todo IDs to mark completed
+   *
    * @return - the list of todo IDs which need to mark completed, can be null if the list is empty.
    */
   public List<String> getCompleteTodos() {
@@ -193,6 +203,7 @@ public class CommandLineParser {
 
   /**
    * Checks if --display is given
+   *
    * @return - true if --display is given
    */
   public Boolean getDisplay() {

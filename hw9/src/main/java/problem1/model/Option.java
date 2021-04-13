@@ -6,12 +6,14 @@ import java.util.Objects;
  * Represent a commandline argument that the program can process
  */
 public class Option {
+
   private String cmd;
   private Boolean takeValue;
 
   /**
    * Construct a new option object with given parameters.
-   * @param cmd - the name of the command
+   *
+   * @param cmd       - the name of the command
    * @param takeValue - if this command takes value
    */
   public Option(String cmd, Boolean takeValue) {
