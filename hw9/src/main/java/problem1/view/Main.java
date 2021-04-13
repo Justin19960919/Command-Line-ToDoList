@@ -1,11 +1,13 @@
 package problem1.view;
 
+import problem1.Controller.TodoApplication;
 import problem1.model.CommandLineParser;
 import problem1.model.InvalidArgumentException;
 import problem1.model.Options;
 
 
 public class Main {
+
   private static Options options = new Options(); // singleton pattern
 
   /**
@@ -17,7 +19,8 @@ public class Main {
   public static void main(String[] args) throws InvalidArgumentException {
     try {
       CommandLineParser parser = new CommandLineParser(options, args);
-
+      TodoApplication tda = new TodoApplication(parser);
+      tda.writeFile();
     } catch (InvalidArgumentException e) {
       System.out.print(e.getMessage());
     }
