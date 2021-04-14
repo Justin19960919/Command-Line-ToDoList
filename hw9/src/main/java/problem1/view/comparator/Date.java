@@ -90,19 +90,19 @@ public class Date implements Comparable<Date>{
     if(this.equals(otherDate)){
       return 0;   // two dates have exactly the same fields
     }
-    if(this.day.compareTo(otherDate.getDay()) < 0){
+
+    if(this.year < otherDate.getYear()){
       return -1;
     }
-    if(this.day.equals(otherDate.getDay()) &&
-        this.month.compareTo(otherDate.getMonth()) < 0){
+    if(this.year.equals(otherDate.getYear()) && this.month < otherDate.getMonth()){
       return -1;
     }
-    if(this.day.equals(otherDate.getDay()) &&
-        this.month.equals(otherDate.getMonth()) &&
-        this.year.compareTo(otherDate.getYear()) < 0
-        ){
+
+    if(this.year.equals(otherDate.getYear()) && this.month .equals(otherDate.getMonth()) &&
+    this.day < otherDate.getDay()){
       return -1;
     }
     return 1;
   }
+
 }

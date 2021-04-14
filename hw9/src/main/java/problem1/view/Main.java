@@ -20,7 +20,7 @@ public class Main {
     try {
       CommandLineParser parser = new CommandLineParser(options, args);
       TodoApplication tda = new TodoApplication(parser);
-      tda.writeFile();
+//      tda.writeFile();
       Display view = new Display(tda);
       view.display();
     } catch (InvalidArgumentException e) {
