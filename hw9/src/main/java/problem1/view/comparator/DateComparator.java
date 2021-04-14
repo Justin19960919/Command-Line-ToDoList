@@ -44,7 +44,7 @@ public class DateComparator implements Comparator<Todo>{
     String td1Due = td1.getDueDate();
     String td2Due = td2.getDueDate();
     String[] td1DateRes = td1Due.split("/");
-    String[] td2DateRes = td1Due.split("/");
+    String[] td2DateRes = td2Due.split("/");
 
     // Not caring about invalid formatting yet here
     // if both not null ,we create a date object, and let it compare themselves

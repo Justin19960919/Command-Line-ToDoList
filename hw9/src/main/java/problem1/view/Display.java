@@ -32,7 +32,7 @@ public class Display{
     this.toDoApp = todoApp;
     this.toDoList = this.toDoApp.getTodoList();
     this.cmp = this.toDoApp.getParser();
-    this.display();
+//    this.display();
   }
 
   /**
