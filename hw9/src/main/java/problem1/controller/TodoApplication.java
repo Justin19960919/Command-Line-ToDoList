@@ -34,25 +34,27 @@ public class TodoApplication {
   public void addTodo() {
     if (this.parser.getAddTodo()) {
       List<String> newTodo = new ArrayList<>();
-      newTodo.add(String.valueOf(this.todoList.size()));//ID
+      newTodo.add(String.valueOf(this.todoList.size()+1));//ID
       newTodo.add(this.parser.getTodoText());//text
       newTodo.add(String.valueOf(this.parser.getCompleted()));//completed
-      newTodo.add(this.parser.getDueDate());
-      newTodo.add(this.parser.getPriority());
-      newTodo.add(this.parser.getCategory());
+      newTodo.add(this.parser.getDueDate()==null? "?":this.parser.getDueDate());
+      newTodo.add(this.parser.getPriority()==null? "?" : this.parser.getPriority());
+      newTodo.add(this.parser.getCategory() == null? "?":this.parser.getCategory());
       Todo td = createTodo(newTodo);
       todoList.add(td);
     }
     //options:
     //1. append one row on csv file
-    //2. rewrite everything
+    //2. erase everything and rewrite the csv file
   }
 
   /**
    * for each to do in the completed list, set the complete status to true
    */
   public void setComplete() {
+    if(this.parser.getCompleteTodos() == null) return;
     for (String td : this.parser.getCompleteTodos()) {
+      System.out.println(td);
       todoList.get(Integer.parseInt(td) - OFFSET).setCompleted();
     }
     //options:
@@ -187,9 +189,7 @@ public class TodoApplication {
   }
 
   /**
-   * Get the parsed command lines
-   *
-   * @return
+   * @return the parsed command lines
    */
   public CommandLineParser getParser() {
     return parser;

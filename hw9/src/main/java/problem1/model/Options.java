@@ -17,7 +17,7 @@ public class Options {
   protected static final String DUE = "--due";
   protected static final String PRIORITY = "--priority";
   protected static final String CATEGORY = "--category";
-  protected static final String COMPLETE_TODO = "complete-todo";
+  protected static final String COMPLETE_TODO = "--complete-todo";
   protected static final String DISPLAY = "--display";
   protected static final String SHOW_INCOMPLETE = "--show-incomplete";
   protected static final String SHOW_CATEGORY = "--show-category";
