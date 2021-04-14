@@ -210,8 +210,19 @@ public class CommandLineParser {
     return this.arguments.containsKey(Options.DISPLAY);
   }
 
+  // Original version
+  /*
   public Boolean getShowCategory() {
     return this.arguments.containsKey(Options.SHOW_CATEGORY);
+  }
+  */
+
+  // New version
+  public String getShowCategory() {
+    if (this.arguments.containsKey(Options.SHOW_CATEGORY)){
+      return this.arguments.get(Options.SHOW_CATEGORY).get(0);
+    }
+    return null;
   }
 
   public Boolean getShowIncomplete() {

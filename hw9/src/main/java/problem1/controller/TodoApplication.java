@@ -1,4 +1,4 @@
-package problem1.Controller;
+package problem1.controller;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -15,7 +15,7 @@ public class TodoApplication {
 
   private List<Todo> todoList;
   private CommandLineParser parser;
-  private static final int OFFSET = 1;
+  private static final int OFFSET = 1;  // list starts with 0
 
   /**
    * constructor of the class
@@ -153,7 +153,7 @@ public class TodoApplication {
     Matcher m = re.matcher(input);
     // split successfully
     while (m.find()) {
-      String s = input.substring(m.start(), m.end());
+      String s = input.substring(m.start()+1, m.end()-1);
       results.add(s);
     }
     return results;
@@ -172,9 +172,28 @@ public class TodoApplication {
     int ID = Integer.parseInt(data.get(0));//id
     String text = data.get(1);//text
     boolean isCompleted = data.get(2).equals("?") ? false : Boolean.parseBoolean(data.get(2));//complete
-    String dueDate = data.get(3).equals("?") ? null : data.get(2);//due date
+    String dueDate = data.get(3).equals("?") ? null : data.get(3);//due date
     int priority = data.get(4).equals("?") ? 3 : Integer.parseInt(data.get(4));//priority
     String category = data.get(5).equals("?") ? null : data.get(5);//category
     return new Todo(ID, text, isCompleted, dueDate, priority, category);
   }
+
+  /**
+   * Getter for the generated to do list, a List
+   * @return the to do list
+   */
+  public List<Todo> getTodoList() {
+    return todoList;
+  }
+
+  /**
+   * Get the parsed command lines
+   *
+   * @return
+   */
+  public CommandLineParser getParser() {
+    return parser;
+  }
+
+
 }

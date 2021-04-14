@@ -1,4 +1,4 @@
-package problem1.Controller;
+package problem1.controller;
 
 public class Todo {
 
@@ -75,5 +75,18 @@ public class Todo {
    */
   public void setCompleted() {
     this.isCompleted = true;
+  }
+
+  @Override
+  public String toString() {
+    final StringBuilder sb = new StringBuilder("Todo{");
+    sb.append("ID=").append(ID);
+    sb.append(", text='").append(text).append('\'');
+    sb.append(", isCompleted=").append(isCompleted);
+    sb.append(", dueDate='").append(dueDate).append('\'');
+    sb.append(", priority=").append(priority);
+    sb.append(", category='").append(category).append('\'');
+    sb.append('}');
+    return sb.toString();
   }
 }
