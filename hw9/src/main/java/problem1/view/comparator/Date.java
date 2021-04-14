@@ -2,30 +2,56 @@ package problem1.view.comparator;
 
 import java.util.Objects;
 
+/**
+ * A Date class that represents a due date in the todo list
+ */
 public class Date implements Comparable<Date>{
 
   private Integer month;
-  private Integer date;
+  private Integer day;
   private Integer year;
 
-  public Date(String month, String date, String year){
+  /**
+   * The constructor for the Date class.
+   * @param month month of Date, a String
+   * @param day day of Date, a String
+   * @param year a String
+   */
+  public Date(String month, String day, String year){
     this.month = Integer.parseInt(month);
-    this.date = Integer.parseInt(date);
+    this.day = Integer.parseInt(day);
     this.year = Integer.parseInt(year);
   }
 
+  /**
+   * Getter of month of date
+   * @return the month, an Integer
+   */
   public Integer getMonth() {
     return month;
   }
 
-  public Integer getDate() {
-    return date;
+  /**
+   * Getter of day of date
+   * @return the day, an Integer
+   */
+  public Integer getDay() {
+    return day;
   }
 
+  /**
+   * Getter of the year of date
+   * @return the year, an Integer
+   */
   public Integer getYear() {
     return year;
   }
 
+  /**
+   * Equals function
+   * @param o another object
+   * @return a boolean
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -36,12 +62,16 @@ public class Date implements Comparable<Date>{
     }
     Date date1 = (Date) o;
     return Objects.equals(getMonth(), date1.getMonth()) && Objects
-        .equals(getDate(), date1.getDate()) && Objects.equals(getYear(), date1.getYear());
+        .equals(getDay(), date1.getDay()) && Objects.equals(getYear(), date1.getYear());
   }
 
+  /**
+   * Hashcode function
+   * @return an int
+   */
   @Override
   public int hashCode() {
-    return Objects.hash(getMonth(), getDate(), getYear());
+    return Objects.hash(getMonth(), getDay(), getYear());
   }
 
   /**
@@ -60,14 +90,14 @@ public class Date implements Comparable<Date>{
     if(this.equals(otherDate)){
       return 0;   // two dates have exactly the same fields
     }
-    if(this.date.compareTo(otherDate.getDate()) < 0){
+    if(this.day.compareTo(otherDate.getDay()) < 0){
       return -1;
     }
-    if(this.date.equals(otherDate.getDate()) &&
+    if(this.day.equals(otherDate.getDay()) &&
         this.month.compareTo(otherDate.getMonth()) < 0){
       return -1;
     }
-    if(this.date.equals(otherDate.getDate()) &&
+    if(this.day.equals(otherDate.getDay()) &&
         this.month.equals(otherDate.getMonth()) &&
         this.year.compareTo(otherDate.getYear()) < 0
         ){

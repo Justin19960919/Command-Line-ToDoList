@@ -2,6 +2,9 @@ package problem1.view.comparator;
 import java.util.Comparator;
 import problem1.controller.Todo;
 
+/**
+ * Compares two Todo objects based on Date
+ */
 public class DateComparator implements Comparator<Todo>{
 
   /**
@@ -29,7 +32,7 @@ public class DateComparator implements Comparator<Todo>{
       return -1;
     }
     // if both null, they are equal
-    if (td1Due == null && td2Due == null) {
+    if (td1Due == null) {
       return 0;
     }
     // else, make into date object
@@ -41,6 +44,9 @@ public class DateComparator implements Comparator<Todo>{
     Date td1Date = new Date(td1DateRes[0],td1DateRes[1],td1DateRes[2]);
     Date td2Date = new Date(td2DateRes[0],td2DateRes[1],td2DateRes[2]);
     return td1Date.compareTo(td2Date);
+
+
+
   }
 
 

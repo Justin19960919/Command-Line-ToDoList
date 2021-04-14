@@ -2,7 +2,9 @@ package problem1.view.comparator;
 import java.util.Comparator;
 import problem1.controller.Todo;
 
-
+/**
+ * Comparator of two Todo objects using the priority
+ */
 public class PriorityComparator implements Comparator<Todo>{
 
   /**
