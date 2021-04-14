@@ -1,30 +1,55 @@
 package problem1.view;
 import java.util.List;
 import java.util.ArrayList;
+
+import problem1.model.CommandLineParser;
+
 import problem1.controller.TodoApplication;
 import problem1.controller.Todo;
+
 import problem1.view.comparator.*;
 import java.util.Collections;
 
 public class Display{
 
   private TodoApplication toDoApp;
+  private List<Todo> toDoList;
+  private CommandLineParser cmp;
 
   public Display(TodoApplication todoApp){
     this.toDoApp = todoApp;
+    this.toDoList = this.toDoApp.getTodoList();
+    this.cmp = this.toDoApp.getParser();
     this.display();
   }
 
+  /**
+   * Displays the output to console according to the parser arguments
+   */
+  public void display(){}
+
+
 
   /**
-   * This just prints out all the todo objects in the todolist for now
+   *  Print out to do list given a list of Todo objects
    */
-  public void display(){
-    // if the parser contains display
-    this.printHeader();
-    for(Todo td: this.toDoApp.getTodoList()){
-      System.out.println(this.formatTodo(td));
+  private void printToDoList(){
+      this.printHeader();
+      for (Todo td : this.toDoList) {
+        System.out.println(this.formatTodo(td));
+      }
+  }
+
+  /**
+   * Print header of the todo list display
+   */
+  private void printHeader(){
+    for(int i=0; i < 100; i++) {
+      System.out.print("#");
     }
+    System.out.println();
+
+    System.out.println("priority \t\t due date \t\t Completed \t\t Category \t\t text \t\t ");
   }
 
   /**
@@ -45,28 +70,19 @@ public class Display{
   }
 
 
-  private void printHeader(){
-    for(int i=0; i < 100; i++) {
-      System.out.print("#");
-    }
-    System.out.println();
-
-    System.out.println("priority \t\t due date \t\t Completed \t\t Category \t\t text \t\t ");
-  }
-
   /**
    * Filters the todo list to only include incomplete to dos
    * @return a List of Todo objects
    */
-  private List<Todo> filterIncompleteToDos() {
+  private void filterIncompleteToDos() {
     List<Todo> res = new ArrayList<>();
-    for(Todo currentTodo: this.toDoApp.getTodoList()){
+    for(Todo currentTodo: this.toDoList){
       if(!currentTodo.isCompleted()){
         // if not complete, add to list
         res.add(currentTodo);
       }
     }
-    return res;
+    this.toDoList = res;
   }
 
 
@@ -75,34 +91,30 @@ public class Display{
    * @param category the category of the todo, a String
    * @return a List of Todo objects
    */
-  private List<Todo> filterToDoByCategory(String category) {
+  private void filterToDoByCategory(String category) {
     List<Todo> res = new ArrayList<>();
-    for(Todo currentTodo: this.toDoApp.getTodoList()){
+    for(Todo currentTodo: this.toDoList){
       if(currentTodo.getCategory().equals(category)){
         res.add(currentTodo);
       }
     }
-    return res;
+    this.toDoList = res;
   }
 
   /**
    * Sorts the list of Todo objects by date using the Date Comparator
    * @return a List of Todo objects
    */
-  private List<Todo> sortTodoByDate() {
-    List<Todo> toDoList = this.toDoApp.getTodoList();
-    Collections.sort(toDoList, new DateComparator());
-    return toDoList;
+  private void sortTodoByDate() {
+    Collections.sort(this.toDoList, new DateComparator());
   }
 
   /**
    * Sorts the list of Todo objects by priority using the Priority Comparator
    * @return a List of Todo objects
    */
-  private List<Todo> sortTodoByPriority() {
-    List<Todo> toDoList = this.toDoApp.getTodoList();
-    Collections.sort(toDoList, new PriorityComparator());
-    return toDoList;
+  private void sortTodoByPriority() {
+    Collections.sort(this.toDoList, new PriorityComparator());
   }
 
 
