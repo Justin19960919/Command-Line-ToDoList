@@ -17,6 +17,7 @@ public class CommandLineParser {
   private Options options;
   private List<String> cmdArgs; // store original commandline args that passed in
   private Map<String, List<String>> arguments; // store validated arguments
+  private List<String> processedArgs; // store args that has been processed
 
   /**
    * Construct a new commandline parser object with the given parameters.
@@ -29,6 +30,7 @@ public class CommandLineParser {
     this.cmdArgs = new ArrayList<>(Arrays.asList(args)); // convert args into an ArrayList
     this.options = options;
     this.arguments = new HashMap<>();
+    this.processedArgs = new ArrayList<>();
     this.processArgs();
     this.validateCsv(); // --csv-file is required
     this.validateTodoText(); // --todo-text is required when --add-todo is given
@@ -46,48 +48,41 @@ public class CommandLineParser {
    */
   private void processArgs() throws InvalidArgumentException {
     int i = INITIAL_VALUE;
-    while (i < options.getOptions().size()) {
-      String cmdName = options.getOptions().get(i).getCmd();
-      Boolean takeValue = options.getOptions().get(i).getTakeValue();
-      String toBeRemoved = null; // place holder for argument to be removed from the list later
-      String toBeRemoved2 = null; // place holder for argument to be removed from the list later
-      // for each option, see if it can be found in the commandline args
-      for (int j = INITIAL_VALUE; j < this.cmdArgs.size(); j++) {
-        String cmdArg = this.cmdArgs.get(j);
+    while (i < this.cmdArgs.size()) {
+      String cmdArg = this.cmdArgs.get(i);
+      // for each commandline arg, see if it can be found in the list of option
+      for (int j = INITIAL_VALUE; j < options.getOptions().size(); j++) {
+        String cmdName = this.options.getOptions().get(j).getCmd();
+        Boolean takeValue = this.options.getOptions().get(j).getTakeValue();
         if (cmdName.equals(cmdArg)) {
           // if the command needs to take a value
           if (takeValue) {
             // cmdArg is followed by its value, not another commandline argument
-            if (j + INCREMENT < this.cmdArgs.size() && !this.cmdArgs.get(j + INCREMENT)
+            if (i + INCREMENT < this.cmdArgs.size() && !this.cmdArgs.get(i + INCREMENT)
                 .startsWith("--")) {
-              String value = this.cmdArgs.get(j + INCREMENT);
+              String value = this.cmdArgs.get(i + INCREMENT);
               // if the map does contain the key
               if (this.arguments.containsKey(
                   cmdName)) { // command like "--complete-todo" can appear more than once
-                this.arguments.get(cmdArg).add(value);
+                this.arguments.get(cmdName).add(value);
               } else {
                 ArrayList<String> lst = new ArrayList<>();
                 lst.add(value);
                 this.arguments.put(cmdName, lst);
               }
-              toBeRemoved = cmdArg;
-              toBeRemoved2 = value;
+              i++;
+              this.processedArgs.add(cmdArg);
+              this.processedArgs.add(value);
               break;
             } else {
               throw new InvalidArgumentException(cmdArg + " is provided but no value is given");
             }
           } else { // if the command does not need to take a value
             this.arguments.put(cmdName, null);
-            toBeRemoved = cmdArg;
+            this.processedArgs.add(cmdArg);
             break;
           }
         }
-      }
-      if (toBeRemoved != null) {
-        this.cmdArgs.remove(toBeRemoved);// remove argument from the list
-      }
-      if (toBeRemoved2 != null) {
-        this.cmdArgs.remove(toBeRemoved2);// remove argument from the list
       }
       i++;
     }
@@ -133,7 +128,7 @@ public class CommandLineParser {
    */
   private void processLeftOver() throws InvalidArgumentException {
     // if there are any arguments left after finishing processArgs()
-    if (this.cmdArgs.size() > INITIAL_VALUE) {
+    if (this.cmdArgs.size() > this.processedArgs.size()) {
       throw new InvalidArgumentException(
           "invalid arguments that can not be processed are provided.");
     }
