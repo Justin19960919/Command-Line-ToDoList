@@ -5,19 +5,19 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Represents command line parser that process and validate command line arguments.
  */
 public class CommandLineParser {
 
-  private static final int INITIAL_VALUE = 0;
+  private static final int START_POINT = 0;
   private static final int INCREMENT = 1;
+  private static final int FIRST_ELEMENT = 0;
 
-  private Options options;
-  private List<String> cmdArgs; // store original commandline args that passed in
   private Map<String, List<String>> arguments; // store validated arguments
-  private List<String> processedArgs; // store args that has been processed
+  private int processedArgs; // count args that has been processed
 
   /**
    * Construct a new commandline parser object with the given parameters.
@@ -27,40 +27,39 @@ public class CommandLineParser {
    * @throws InvalidArgumentException - throw exception if argument is invalid
    */
   public CommandLineParser(Options options, String[] args) throws InvalidArgumentException {
-    this.cmdArgs = new ArrayList<>(Arrays.asList(args)); // convert args into an ArrayList
-    this.options = options;
     this.arguments = new HashMap<>();
-    this.processedArgs = new ArrayList<>();
-    this.processArgs();
+    this.processedArgs = START_POINT;
+    this.processArgs(options, args);
     this.validateCsv(); // --csv-file is required
     this.validateTodoText(); // --todo-text is required when --add-todo is given
     this.validateDisplay();
     this.validateSort(); // make sure two --sort are not given together
-    this.processLeftOver(); // process left over args in the command line arguments
+    this.processLeftOver(args); // process left over args in the command line arguments
   }
 
   /**
    * Process the commandline arguments.
-   *
+   * @param options - the options onject
+   * @param args - the array of commandline arguments
    * @throws InvalidArgumentException - throw exception if "email" command is not followed by
    *                                  "email-template" or "letter" command is not followed by
    *                                  "letter-template".
    */
-  private void processArgs() throws InvalidArgumentException {
-    int i = INITIAL_VALUE;
-    while (i < this.cmdArgs.size()) {
-      String cmdArg = this.cmdArgs.get(i);
+  private void processArgs(Options options, String[] args) throws InvalidArgumentException {
+    int i = START_POINT;
+    while (i < args.length) {
+      String cmdArg = args[i];
       // for each commandline arg, see if it can be found in the list of option
-      for (int j = INITIAL_VALUE; j < options.getOptions().size(); j++) {
-        String cmdName = this.options.getOptions().get(j).getCmd();
-        Boolean takeValue = this.options.getOptions().get(j).getTakeValue();
+      for (int j = START_POINT; j < options.getOptions().size(); j++) {
+        String cmdName = options.getOptions().get(j).getCmd();
+        Boolean takeValue = options.getOptions().get(j).getTakeValue();
         if (cmdName.equals(cmdArg)) {
           // if the command needs to take a value
           if (takeValue) {
             // cmdArg is followed by its value, not another commandline argument
-            if (i + INCREMENT < this.cmdArgs.size() && !this.cmdArgs.get(i + INCREMENT)
+            if (i + INCREMENT < args.length && !args[i + INCREMENT]
                 .startsWith("--")) {
-              String value = this.cmdArgs.get(i + INCREMENT);
+              String value = args[i + INCREMENT];
               // if the map does contain the key
               if (this.arguments.containsKey(
                   cmdName)) { // command like "--complete-todo" can appear more than once
@@ -71,15 +70,15 @@ public class CommandLineParser {
                 this.arguments.put(cmdName, lst);
               }
               i++;
-              this.processedArgs.add(cmdArg);
-              this.processedArgs.add(value);
+              this.processedArgs++;
+              this.processedArgs++;
               break;
             } else {
               throw new InvalidArgumentException(cmdArg + " is provided but no value is given");
             }
           } else { // if the command does not need to take a value
             this.arguments.put(cmdName, null);
-            this.processedArgs.add(cmdArg);
+            this.processedArgs++;
             break;
           }
         }
@@ -88,12 +87,20 @@ public class CommandLineParser {
     }
   }
 
+  /**
+   * Checks if --csv-file is given
+   * @throws InvalidArgumentException - throw exception if csv command is not given
+   */
   private void validateCsv() throws InvalidArgumentException {
     if (!this.arguments.containsKey(Options.CSV)) {
       throw new InvalidArgumentException("csv command is required");
     }
   }
 
+  /**
+   * Checks if --todo-text is given when --add-todo is provided
+   * @throws InvalidArgumentException - throw exception if --todo-text is given when --add-todo is provided
+   */
   private void validateTodoText() throws InvalidArgumentException {
     if (this.arguments.containsKey(Options.ADD_TODO) && !this.arguments
         .containsKey(Options.TODO_TEXT)) {
@@ -101,6 +108,10 @@ public class CommandLineParser {
     }
   }
 
+  /**
+   * When one of the four display option command is given, checks if --display is provided
+   * @throws InvalidArgumentException - throw exception if one of the four display option command is given but --display is provided
+   */
   private void validateDisplay() throws InvalidArgumentException {
     // --display not given
     if (!this.arguments.containsKey(Options.DISPLAY)) {
@@ -113,6 +124,10 @@ public class CommandLineParser {
     }
   }
 
+  /**
+   * Checks if two sort commands are provided together
+   * @throws InvalidArgumentException - throw exception if two sort commands are provided together
+   */
   private void validateSort() throws InvalidArgumentException {
     if (this.arguments.containsKey(Options.SORT_BY_DATE) && this.arguments
         .containsKey(Options.SORT_BY_PRIORITY)) {
@@ -123,19 +138,24 @@ public class CommandLineParser {
 
   /**
    * Checks if there are any arguments left after the processArgs() is finished
-   *
+   * @param args - the array of commandline arguments
    * @throws InvalidArgumentException - throw exception if there are any arguments left
    */
-  private void processLeftOver() throws InvalidArgumentException {
+  private void processLeftOver(String[] args) throws InvalidArgumentException {
     // if there are any arguments left after finishing processArgs()
-    if (this.cmdArgs.size() > this.processedArgs.size()) {
+    if (args.length > this.processedArgs) {
       throw new InvalidArgumentException(
           "invalid arguments that can not be processed are provided.");
     }
   }
 
+  /**
+   * Get the csv file
+   *
+   * @return - the csv file
+   */
   public String getCsvFile() {
-    return this.arguments.get(Options.CSV).get(0);
+    return this.arguments.get(Options.CSV).get(FIRST_ELEMENT);
   }
 
   /**
@@ -147,9 +167,14 @@ public class CommandLineParser {
     return this.arguments.containsKey(Options.ADD_TODO);
   }
 
+  /**
+   * get todo text
+   *
+   * @return - todo text
+   */
   public String getTodoText() {
     if (this.getAddTodo()) {
-      return this.arguments.get(Options.TODO_TEXT).get(0);
+      return this.arguments.get(Options.TODO_TEXT).get(FIRST_ELEMENT);
     }
     return null;
   }
@@ -163,13 +188,22 @@ public class CommandLineParser {
     return this.arguments.containsKey(Options.COMPLETED);
   }
 
+  /**
+   * get due date
+   *
+   * @return - the due date or null if not given
+   */
   public String getDueDate() {
     if (this.arguments.containsKey(Options.DUE)) {
-      return this.arguments.get(Options.DUE).get(0);
+      return this.arguments.get(Options.DUE).get(FIRST_ELEMENT);
     }
     return null;
   }
 
+  /**
+   * get priority
+   * @return - priority of the new todo or null if not given
+   */
   public String getPriority() {
     if (this.arguments.containsKey(Options.PRIORITY)) {
       return this.arguments.get(Options.PRIORITY).get(0);
@@ -177,6 +211,10 @@ public class CommandLineParser {
     return null;
   }
 
+  /**
+   * get category of the new todo
+   * @return - category of the new todo or null if not given
+   */
   public String getCategory() {
     if (this.arguments.containsKey(Options.CATEGORY)) {
       return this.arguments.get(Options.CATEGORY).get(0);
@@ -205,30 +243,79 @@ public class CommandLineParser {
     return this.arguments.containsKey(Options.DISPLAY);
   }
 
-  // Original version
-  /*
-  public Boolean getShowCategory() {
-    return this.arguments.containsKey(Options.SHOW_CATEGORY);
-  }
-  */
-
-  // New version
+  /**
+   * Get show category
+   * @return - the category to show or null if not given
+   */
   public String getShowCategory() {
     if (this.arguments.containsKey(Options.SHOW_CATEGORY)){
-      return this.arguments.get(Options.SHOW_CATEGORY).get(0);
+      return this.arguments.get(Options.SHOW_CATEGORY).get(FIRST_ELEMENT);
     }
     return null;
   }
 
+  /**
+   * Get show incomplete
+   * @return - true if --show-incomplete is given
+   */
   public Boolean getShowIncomplete() {
     return this.arguments.containsKey(Options.SHOW_INCOMPLETE);
   }
 
+  /**
+   * get sort by date
+   * @return - true if --sort-by-date is given
+   */
   public Boolean getSortByDate() {
     return this.arguments.containsKey(Options.SORT_BY_DATE);
   }
 
+  /**
+   * get sort by priority
+   * @return - true if --sort-by-priority is given
+   */
   public Boolean getSortByPriority() {
     return this.arguments.containsKey(Options.SORT_BY_PRIORITY);
+  }
+
+  /**
+   * Compare this object with the given object.
+   *
+   * @param o - the given object to compare with
+   * @return - true if this is equal to the given object
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
+    CommandLineParser that = (CommandLineParser) o;
+    return this.processedArgs == that.processedArgs && Objects.equals(this.arguments, that.arguments);
+  }
+
+  /**
+   * Calculate the hashcode of this object.
+   *
+   * @return - the hash code of this object.
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.arguments, this.processedArgs);
+  }
+
+  /**
+   * Get string representation of this object.
+   *
+   * @return - string representation of this object.
+   */
+  @Override
+  public String toString() {
+    return "CommandLineParser{" +
+        "arguments=" + this.arguments +
+        ", processedArgs=" + this.processedArgs +
+        '}';
   }
 }
