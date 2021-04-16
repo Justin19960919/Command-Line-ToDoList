@@ -16,7 +16,7 @@ public class InvalidArgumentException extends Exception{
       + "--sort-by-date (Optional) If --display is provided, sort the list of by date order (ascending). be combined with --sort-by-priority.\n"
       + "--sort-by-priority (Optional) If --display is provided, sort the list of todos by priority (ascending). Cannot be combined with --sort-by-date.\n"
       + "Examples:\n"
-      + "--csv-file todos.csv --add-todo --todo-text homework10 --due 04/19/2021 --priority 3\n"
+      + "--csv-file todos.csv --add-todo --todo-text \"finish homework10\" --due 04/19/2021 --priority 3\n"
       + "--complete-todo 1 --display --show-incomplete --sort-by-date";
   private String message;
 
@@ -39,6 +39,6 @@ public class InvalidArgumentException extends Exception{
    */
   @Override
   public String getMessage() {
-    return "Error message: " + message + S;
+    return "Error message: " + this.message + this.S;
   }
 }

@@ -3,6 +3,7 @@ package problem1.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import problem1.model.Option;
 
 /**
@@ -60,5 +61,45 @@ public class Options {
    */
   public List<Option> getOptions() {
     return this.options;
+  }
+
+  /**
+   * Compare this object with the given object.
+   *
+   * @param o - the given object to compare with
+   * @return - true if this is equal to the given object
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
+    Options options1 = (Options) o;
+    return Objects.equals(this.options, options1.options);
+  }
+
+  /**
+   * Calculate the hashcode of this object.
+   *
+   * @return - the hash code of this object.
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.options);
+  }
+
+  /**
+   * Get string representation of this object.
+   *
+   * @return - string representation of this object.
+   */
+  @Override
+  public String toString() {
+    return "Options{" +
+        "options=" + this.options +
+        '}';
   }
 }

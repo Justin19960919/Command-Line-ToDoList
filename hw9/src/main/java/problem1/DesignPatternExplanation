@@ -1,0 +1,6 @@
+Singleton pattern:
+  For the Options class, it represents the list of option that the parser may encounter and process.
+  These information won't change during the life time of the program. So only one instance of the
+  Options class is needed to coordinate actions across the program. Thus, in Main class, I created a
+  static private field to store the instance of Options. No matter how many parser objects are
+  being created, they all use the same instance of Options.
