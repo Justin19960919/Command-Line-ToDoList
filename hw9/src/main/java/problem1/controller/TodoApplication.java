@@ -34,12 +34,12 @@ public class TodoApplication {
   public void addTodo() {
     if (this.parser.getAddTodo()) {
       List<String> newTodo = new ArrayList<>();
-      newTodo.add(String.valueOf(this.todoList.size()+1));//ID
+      newTodo.add(String.valueOf(this.todoList.size() + 1));//ID
       newTodo.add(this.parser.getTodoText());//text
       newTodo.add(String.valueOf(this.parser.getCompleted()));//completed
-      newTodo.add(this.parser.getDueDate()==null? "?":this.parser.getDueDate());
-      newTodo.add(this.parser.getPriority()==null? "?" : this.parser.getPriority());
-      newTodo.add(this.parser.getCategory() == null? "?":this.parser.getCategory());
+      newTodo.add(this.parser.getDueDate() == null ? "?" : this.parser.getDueDate());
+      newTodo.add(this.parser.getPriority() == null ? "?" : this.parser.getPriority());
+      newTodo.add(this.parser.getCategory() == null ? "?" : this.parser.getCategory());
       Todo td = createTodo(newTodo);
       todoList.add(td);
     }
@@ -52,7 +52,9 @@ public class TodoApplication {
    * for each to do in the completed list, set the complete status to true
    */
   public void setComplete() {
-    if(this.parser.getCompleteTodos() == null) return;
+    if (this.parser.getCompleteTodos() == null) {
+      return;
+    }
     for (String td : this.parser.getCompleteTodos()) {
       System.out.println(td);
       todoList.get(Integer.parseInt(td) - OFFSET).setCompleted();
@@ -108,7 +110,8 @@ public class TodoApplication {
         .append(comma);//complete status
     line.append(doubleQuote).append(td.getDueDate() == null ? "?" : td.getDueDate())
         .append(doubleQuote).append(comma);//due date -  if it's null, append "?"
-    line.append(doubleQuote).append(td.getPriority()).append(doubleQuote).append(comma);//priority
+    line.append(doubleQuote).append(td.getPriority() == 4 ? "?" : td.getPriority())
+        .append(doubleQuote).append(comma);//priority
     line.append(doubleQuote).append(td.getCategory() == null ? "?" : td.getCategory())
         .append(doubleQuote);//category -  if it's null, append "?"
     return line.toString();
@@ -155,17 +158,16 @@ public class TodoApplication {
     Matcher m = re.matcher(input);
     // split successfully
     while (m.find()) {
-      String s = input.substring(m.start()+1, m.end()-1);
+      String s = input.substring(m.start() + 1, m.end() - 1);
       results.add(s);
     }
     return results;
   }
 
   /**
-   * Create a to do object based on the given list of info
-   * for category and due date, if not given set to null
-   * for complete status, if not given, set to false
-   * for priority, if not given, set to 3 (least)
+   * Create a to do object based on the given list of info for category and due date, if not given
+   * set to null for complete status, if not given, set to false for priority, if not given, set to
+   * 3 (least)
    *
    * @param data a list that contains the info of the to do
    * @return the to do object created
@@ -173,15 +175,17 @@ public class TodoApplication {
   private Todo createTodo(List<String> data) {
     int ID = Integer.parseInt(data.get(0));//id
     String text = data.get(1);//text
-    boolean isCompleted = data.get(2).equals("?") ? false : Boolean.parseBoolean(data.get(2));//complete
+    boolean isCompleted =
+        data.get(2).equals("?") ? false : Boolean.parseBoolean(data.get(2));//complete
     String dueDate = data.get(3).equals("?") ? null : data.get(3);//due date
-    int priority = data.get(4).equals("?") ? 3 : Integer.parseInt(data.get(4));//priority
+    int priority = data.get(4).equals("?") ? 4 : Integer.parseInt(data.get(4));//priority
     String category = data.get(5).equals("?") ? null : data.get(5);//category
     return new Todo(ID, text, isCompleted, dueDate, priority, category);
   }
 
   /**
    * Getter for the generated to do list, a List
+   *
    * @return the to do list
    */
   public List<Todo> getTodoList() {

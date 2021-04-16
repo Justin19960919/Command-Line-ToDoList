@@ -6,7 +6,7 @@ public class Todo {
   private final String text;
   private boolean isCompleted;//default:false
   private final String dueDate;
-  private final int priority;//default false
+  private final int priority;//default 4
   private final String category;
 
 
