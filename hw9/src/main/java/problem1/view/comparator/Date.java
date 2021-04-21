@@ -75,6 +75,20 @@ public class Date implements Comparable<Date>{
   }
 
   /**
+   * To string method
+   * @return a String
+   */
+  @Override
+  public String toString() {
+    final StringBuilder sb = new StringBuilder("Date{");
+    sb.append("month=").append(month);
+    sb.append(", day=").append(day);
+    sb.append(", year=").append(year);
+    sb.append('}');
+    return sb.toString();
+  }
+
+  /**
    * Compares two dates according to the month, date, and year fields.
    * If all are equal return 0
    * If date is less than other, return -1

@@ -19,7 +19,7 @@ import java.util.Collections;
  * filter by category
  */
 public class Display{
-
+  private static final String SPACE = "   \t\t   ";
   private TodoApplication toDoApp;
   private List<Todo> toDoList;
   private CommandLineParser cmp;
@@ -32,7 +32,6 @@ public class Display{
     this.toDoApp = todoApp;
     this.toDoList = this.toDoApp.getTodoList();
     this.cmp = this.toDoApp.getParser();
-//    this.display();
   }
 
   /**
@@ -63,12 +62,13 @@ public class Display{
    * Print header of the todo list display
    */
   private void printHeader(){
+    String HEADER_SPACE = " \t\t ";
     for(int i=0; i < 100; i++) {
       System.out.print("#");
     }
     System.out.println();
-
-    System.out.println("priority \t\t due date \t\t Completed \t\t Category \t\t text \t\t ");
+    System.out.println("priority" + HEADER_SPACE +  "due date" + HEADER_SPACE + "Completed"
+        + HEADER_SPACE + "Category" + HEADER_SPACE + "text" + HEADER_SPACE);
   }
 
   /**
@@ -77,7 +77,6 @@ public class Display{
    * @return a formatted string that contains information of the todo object
    */
   private String formatTodo(Todo td){
-    String SPACE = "   \t\t   ";
     StringBuilder tdData = new StringBuilder();
     tdData.append("\t").append(td.getPriority()).append(SPACE)
         .append(td.getDueDate()).append(SPACE)
@@ -113,7 +112,7 @@ public class Display{
       String category = this.cmp.getShowCategory();
       List<Todo> res = new ArrayList<>();
       for (Todo currentTodo : this.toDoList) {
-        if (currentTodo.getCategory().equals(category)) {
+        if (currentTodo.getCategory() != null && currentTodo.getCategory().equals(category)) {
           res.add(currentTodo);
         }
       }

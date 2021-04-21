@@ -2,8 +2,6 @@ package problem1.view.comparator;
 import java.util.Comparator;
 import problem1.controller.Todo;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 /**
  * Compares two Todo objects based on Date
  */
@@ -25,8 +23,6 @@ public class DateComparator implements Comparator<Todo>{
   public int compare(Todo td1, Todo td2) {
 //    System.out.println(td1.toString());
 //    System.out.println(td2.toString());
-
-
 
     // if td1 is null, then it should come after td2
     if (td1.getDueDate() == null && td2.getDueDate()!= null) {
@@ -52,8 +48,6 @@ public class DateComparator implements Comparator<Todo>{
     Date td2Date = new Date(td2DateRes[0],td2DateRes[1],td2DateRes[2]);
 
     return td1Date.compareTo(td2Date);
-
-
   }
 
 
