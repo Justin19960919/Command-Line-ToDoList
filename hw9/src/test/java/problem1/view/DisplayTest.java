@@ -1,17 +1,11 @@
 package problem1.view;
 
-import static org.junit.Assert.*;
-
 
 import org.junit.Before;
 import org.junit.Test;
 import problem1.controller.TodoApplication;
-import problem1.model.CommandLineParser;
-import problem1.model.Options;
-
-
-import org.junit.Before;
-import org.junit.Test;
+import problem1.controller.CommandLineParser;
+import problem1.controller.Options;
 
 public class DisplayTest {
 

@@ -2,11 +2,13 @@ package problem1.view;
 import java.util.List;
 import java.util.ArrayList;
 
-import problem1.model.CommandLineParser;
+import problem1.controller.CommandLineParser;
 
 import problem1.controller.TodoApplication;
-import problem1.controller.Todo;
+import problem1.model.Todo;
 
+import problem1.model.comparator.DateComparator;
+import problem1.model.comparator.PriorityComparator;
 import problem1.view.comparator.*;
 import java.util.Collections;
 

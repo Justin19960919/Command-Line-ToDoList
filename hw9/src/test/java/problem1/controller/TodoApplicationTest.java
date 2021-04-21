@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
-import problem1.model.CommandLineParser;
-import problem1.model.Options;
+import problem1.model.Todo;
 
 public class TodoApplicationTest {
   Todo td1;

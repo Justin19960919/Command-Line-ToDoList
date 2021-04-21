@@ -1,9 +1,9 @@
 package problem1.view;
 
 import problem1.controller.TodoApplication;
-import problem1.model.CommandLineParser;
-import problem1.model.InvalidArgumentException;
-import problem1.model.Options;
+import problem1.controller.CommandLineParser;
+import problem1.controller.InvalidArgumentException;
+import problem1.controller.Options;
 
 
 public class Main {

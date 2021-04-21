@@ -1,4 +1,4 @@
-package problem1.model;
+package problem1.controller;
 
 public class InvalidArgumentException extends Exception{
   private static final String S = "\nUsage: \n"

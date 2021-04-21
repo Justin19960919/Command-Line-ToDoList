@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import problem1.model.comparator.Date;
 
 public class DateTest {
 

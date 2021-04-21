@@ -1,10 +1,9 @@
-package problem1.model;
+package problem1.controller;
 
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import problem1.model.Option;
 
 /**
  * Options class represents a list of option that the program can process

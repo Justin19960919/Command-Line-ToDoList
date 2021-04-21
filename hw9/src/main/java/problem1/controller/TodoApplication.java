@@ -9,13 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import problem1.model.CommandLineParser;
+import problem1.model.Todo;
 
 public class TodoApplication {
 
   private List<Todo> todoList;
   private CommandLineParser parser;
   private static final int OFFSET = 1;  // list starts with 0
+  private static final int PRIORITY_DEFAULT = 4;
+  private static final boolean COMPLETED_DEFAULT = false;
 
   /**
    * constructor of the class
@@ -110,7 +112,7 @@ public class TodoApplication {
         .append(comma);//complete status
     line.append(doubleQuote).append(td.getDueDate() == null ? "?" : td.getDueDate())
         .append(doubleQuote).append(comma);//due date -  if it's null, append "?"
-    line.append(doubleQuote).append(td.getPriority() == 4 ? "?" : td.getPriority())
+    line.append(doubleQuote).append(td.getPriority() == PRIORITY_DEFAULT ? "?" : td.getPriority())
         .append(doubleQuote).append(comma);//priority
     line.append(doubleQuote).append(td.getCategory() == null ? "?" : td.getCategory())
         .append(doubleQuote);//category -  if it's null, append "?"
@@ -158,7 +160,7 @@ public class TodoApplication {
     Matcher m = re.matcher(input);
     // split successfully
     while (m.find()) {
-      String s = input.substring(m.start() + 1, m.end() - 1);
+      String s = input.substring(m.start() + OFFSET, m.end() - OFFSET);
       results.add(s);
     }
     return results;
@@ -176,9 +178,9 @@ public class TodoApplication {
     int ID = Integer.parseInt(data.get(0));//id
     String text = data.get(1);//text
     boolean isCompleted =
-        data.get(2).equals("?") ? false : Boolean.parseBoolean(data.get(2));//complete
+        data.get(2).equals("?") ? COMPLETED_DEFAULT : Boolean.parseBoolean(data.get(2));//complete
     String dueDate = data.get(3).equals("?") ? null : data.get(3);//due date
-    int priority = data.get(4).equals("?") ? 4 : Integer.parseInt(data.get(4));//priority
+    int priority = data.get(4).equals("?") ? PRIORITY_DEFAULT : Integer.parseInt(data.get(4));//priority
     String category = data.get(5).equals("?") ? null : data.get(5);//category
     return new Todo(ID, text, isCompleted, dueDate, priority, category);
   }

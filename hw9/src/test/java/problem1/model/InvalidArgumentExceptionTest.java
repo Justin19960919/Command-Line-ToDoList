@@ -3,6 +3,7 @@ package problem1.model;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import problem1.controller.InvalidArgumentException;
 
 public class InvalidArgumentExceptionTest {
   private InvalidArgumentException e;

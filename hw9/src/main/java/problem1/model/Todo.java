@@ -1,4 +1,4 @@
-package problem1.controller;
+package problem1.model;
 
 public class Todo {
 

@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import problem1.controller.CommandLineParser;
+import problem1.controller.InvalidArgumentException;
+import problem1.controller.Options;
 
 public class CommandLineParserTest {
   private CommandLineParser parser;

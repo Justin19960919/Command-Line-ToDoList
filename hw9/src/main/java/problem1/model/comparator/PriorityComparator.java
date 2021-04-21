@@ -1,6 +1,6 @@
-package problem1.view.comparator;
+package problem1.model.comparator;
 import java.util.Comparator;
-import problem1.controller.Todo;
+import problem1.model.Todo;
 
 /**
  * Comparator of two Todo objects using the priority

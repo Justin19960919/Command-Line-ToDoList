@@ -1,10 +1,11 @@
 package problem1.view.comparator;
 
-import problem1.controller.Todo;
+import problem1.model.Todo;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import problem1.model.comparator.PriorityComparator;
 
 public class PriorityComparatorTest {
 
