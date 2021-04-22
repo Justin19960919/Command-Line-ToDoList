@@ -20,6 +20,8 @@ import java.util.Collections;
  * filter by category
  */
 public class Display{
+
+  private static Display view; // singleton (lazy allocation)
   private static final String SPACE = "   \t\t   ";
   private TodoApplication toDoApp;
   private List<Todo> toDoList;
@@ -33,6 +35,19 @@ public class Display{
     this.toDoApp = todoApp;
     this.toDoList = this.toDoApp.getTodoList();
     this.cmp = this.toDoApp.getParser();
+  }
+
+  /**
+   * Singleton implentation to enforce only one instance of
+   * the display class
+   * @param todoApp a TodoApplication object
+   * @return a static instance of the Display object
+   */
+  public static Display getView(TodoApplication todoApp){
+    if(view == null){
+      view = new Display(todoApp);
+    }
+    return view;
   }
 
   /**
@@ -53,10 +68,15 @@ public class Display{
    *  Print out to do list given a list of Todo objects
    */
   private void printToDoList(){
+    String NO_TODOLIST = "There are currently no todos in the todolist to display.";
+    if(this.toDoList.size() == 0) {
+      System.out.println(NO_TODOLIST);
+    }else {
       this.printHeader();
       for (Todo td : this.toDoList) {
         System.out.println(this.formatTodo(td));
       }
+    }
   }
 
   /**
