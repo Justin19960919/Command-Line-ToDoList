@@ -53,10 +53,15 @@ public class Display{
    *  Print out to do list given a list of Todo objects
    */
   private void printToDoList(){
+    String NO_TODOLIST = "There are currently no todos in the todolist to display.";
+    if(this.toDoList.size() == 0) {
+      System.out.println(NO_TODOLIST);
+    }else {
       this.printHeader();
       for (Todo td : this.toDoList) {
         System.out.println(this.formatTodo(td));
       }
+    }
   }
 
   /**

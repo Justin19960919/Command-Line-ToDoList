@@ -1,3 +1,8 @@
+## Assignment 9
+Group members: Hankai Jing, Ying Zeng, Chieh Lin Lee
+
+For this assignment, we used the singleton pattern, as well as the MVC architecture to structure our code.
+
 Singleton pattern:
   For the Options class, it represents the list of option that the parser may encounter and process.
   These information won't change during the life time of the program. So only one instance of the
@@ -9,3 +14,5 @@ To do class is considered to be the model of the mvc architecture because it tal
 retrieve and store data. The TodoApplication class is considered to part of controller of mvc
 architecture because it has some methods that change the data, for example the addTodo() and setComplete()
 that add a new to do task or change the complete status of a certain to do task.
+
+
