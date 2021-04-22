@@ -87,4 +87,11 @@ public class TodoApplicationTest {
     assertEquals(3, l.size());
     assertTrue(l.get(2).contains("eat"));
   }
+
+  @Test
+  public void testEquals(){
+    assertEquals(tda, tda);
+    TodoApplication tda2 = new TodoApplication(parser);
+    assertEquals(tda, tda2);
+  }
 }

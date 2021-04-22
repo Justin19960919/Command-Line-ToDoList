@@ -7,8 +7,8 @@ import problem1.model.Todo;
  */
 public class DateComparator implements Comparator<Todo>{
   private static final int LESS = -1;
-  private static final int EQUAL = -1;
-  private static final int GREATER = -1;
+  private static final int EQUAL = 0;
+  private static final int GREATER = 1;
   private static final int MONTH_INDEX = 0;
   private static final int DAY_INDEX = 1;
   private static final int YEAR_INDEX = 2;

@@ -105,8 +105,10 @@ public class Todo {
         isCompleted == todo.isCompleted &&
         priority == todo.priority &&
         text.equals(todo.text) &&
-        dueDate.equals(todo.dueDate) &&
-        category.equals(todo.category);
+        (dueDate == null && todo.dueDate == null || (dueDate != null && todo.dueDate != null
+            && dueDate.equals(todo.dueDate))) &&
+        (category == null && todo.category == null || (category != null && todo.category != null
+            && category.equals(todo.category)));
   }
 
   @Override
