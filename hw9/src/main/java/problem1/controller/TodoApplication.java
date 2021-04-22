@@ -25,6 +25,7 @@ public class TodoApplication {
   private static final int DUE_INDEX = 3;
   private static final int PRIORITY_INDEX = 4;
   private static final int CATEGORY_INDEX = 5;
+  private static final int STARTING_ID = 1;
 
 
   /**
@@ -66,8 +67,10 @@ public class TodoApplication {
       return;
     }
     for (String td : this.parser.getCompleteTodos()) {
-      System.out.println(td);
-      todoList.get(Integer.parseInt(td) - OFFSET).setCompleted();
+      int id= Integer.parseInt(td);
+      if(id > todoList.size() || id < STARTING_ID)
+        throw new IllegalArgumentException("Todo task " + id + " does not exist!");
+      todoList.get(id - OFFSET).setCompleted();
     }
     //options:
     //1. erase everything and rewrite the csv file

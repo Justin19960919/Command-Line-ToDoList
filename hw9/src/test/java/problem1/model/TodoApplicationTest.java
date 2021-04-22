@@ -11,6 +11,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import problem1.controller.CommandLineParser;
+import problem1.controller.InvalidArgumentException;
 import problem1.controller.Options;
 import problem1.controller.TodoApplication;
 import problem1.model.Todo;
@@ -40,6 +41,17 @@ public class TodoApplicationTest {
   @Test
   public void addTodo() {
     assertEquals(2, tda.getTodoList().size());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void setCompleteInvalidId() throws InvalidArgumentException {
+    String[] args2 = new String[8];
+    args2[0] = "--csv-file"; args2[1] = "test_todo_application.csv"; args2[2] = "--complete-todo";
+    args2[3] = "0"; args2[4] = "--display";
+    args2[5] = "--add-todo"; args2[6] = "--todo-text"; args2[7] = "eat";
+    CommandLineParser parser2 = new CommandLineParser(options, args2);
+    TodoApplication tda2 = new TodoApplication(parser2);
+    tda2.setComplete();
   }
 
   @Test
