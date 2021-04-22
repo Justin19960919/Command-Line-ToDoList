@@ -22,7 +22,7 @@ public class CommandLineParserTest {
         "--add-todo", "--todo-text", "finish bytedance OA", "--priority", "1", "--csv-file", "data.csv"};
     args1 = new String[]{
         "--add-todo", "--todo-text", "finish bytedance OA", "--due", "04/25/2021", "--category", "coding", "--completed", "--display", "--sort-by-date", "--csv-file", "data.csv"};
-    options = new Options();
+    options = Options.getInstance();
     parser = new CommandLineParser(options, args);
     parser1 = new CommandLineParser(options, args);
     parser2 = new CommandLineParser(options, args1);

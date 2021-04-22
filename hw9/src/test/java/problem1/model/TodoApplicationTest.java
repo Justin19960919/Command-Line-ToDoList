@@ -28,7 +28,7 @@ public class TodoApplicationTest {
   public void setUp() throws Exception {
     td1 = new Todo(2,"eat", false, "2/2/2021", 2, "?");
     td2 = new Todo(1,"sleep", true, "4/4/2021", 1, "daily");
-    options = new Options();
+    options = Options.getInstance();
     args = new String[8];
     args[0] = "--csv-file"; args[1] = "test_todo_application.csv"; args[2] = "--complete-todo";
     args[3] = "1"; args[4] = "--display";

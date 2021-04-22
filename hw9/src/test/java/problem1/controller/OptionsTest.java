@@ -11,7 +11,7 @@ public class OptionsTest {
 
   @Before
   public void setUp() throws Exception {
-    options = new Options();
+    options = Options.getInstance();
   }
 
   @Test
@@ -31,13 +31,13 @@ public class OptionsTest {
 
   @Test
   public void testEquals() {
-    Options options1 = new Options();
+    Options options1 = Options.getInstance();
     assertTrue(options.equals(options1));
   }
 
   @Test
   public void testHashCode() {
-    Options options1 = new Options();
+    Options options1 = Options.getInstance();
     assertEquals(options.hashCode(), options1.hashCode());
   }
 

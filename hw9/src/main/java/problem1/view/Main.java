@@ -8,7 +8,7 @@ import problem1.controller.Options;
 
 public class Main {
 
-  private static Options options = new Options(); // singleton pattern
+  private static Options options = Options.getInstance(); // singleton pattern
 
   /**
    * The main function to carry out the whole process

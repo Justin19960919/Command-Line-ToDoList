@@ -24,12 +24,23 @@ public class Options {
   protected static final String SORT_BY_DATE = "--sort-by-date";
   protected static final String SORT_BY_PRIORITY = "--sort-by-priority";
 
+  private static Options singleInstance; // singleton pattern
   private List<Option> options;
+
+  /**
+   * Return the only instance of this class
+   */
+  public static Options getInstance() {
+    if (singleInstance == null) {
+      singleInstance = new Options();
+    }
+    return singleInstance;
+  }
 
   /**
    * Constructs a new Options object
    */
-  public Options() {
+  private Options() {
     this.options = new ArrayList<>();
     this.createOptions();
   }

@@ -36,7 +36,7 @@ public class DisplayTest {
 
   @Before
   public void setUp() throws Exception {
-    options = new Options();
+    options = Options.getInstance();
     parser1 = new CommandLineParser(options, argument1);
     parser2 = new CommandLineParser(options, argument2);
     parser3 = new CommandLineParser(options, argument3);
