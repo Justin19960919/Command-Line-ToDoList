@@ -9,7 +9,7 @@ import problem1.controller.Options;
 public class Main {
 
   private static Options options = new Options(); // singleton pattern
-  private static Display view;                    // singleton; lazy allocation
+
   /**
    * The main function to carry out the whole process
    *
@@ -21,7 +21,7 @@ public class Main {
       CommandLineParser parser = new CommandLineParser(options, args);
       TodoApplication tda = new TodoApplication(parser);
       tda.writeFile();
-      view = new Display(tda);
+      Display view = Display.getView(tda);
       view.display();
     } catch (InvalidArgumentException e) {
       System.out.print(e.getMessage());
