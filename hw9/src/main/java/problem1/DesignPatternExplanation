@@ -4,3 +4,8 @@ Singleton pattern:
   Options class is needed to coordinate actions across the program. Thus, in Main class, I created a
   static private field to store the instance of Options. No matter how many parser objects are
   being created, they all use the same instance of Options.
+
+To do class is considered to be the model of the mvc architecture because it talks to data source to
+retrieve and store data. The TodoApplication class is considered to part of controller of mvc
+architecture because it has some methods that change the data, for example the addTodo() and setComplete()
+that add a new to do task or change the complete status of a certain to do task.
