@@ -21,7 +21,6 @@ import java.util.Collections;
  */
 public class Display{
 
-  private static Display view; // singleton (lazy allocation)
   private static final String SPACE = "   \t\t   ";
   private TodoApplication toDoApp;
   private List<Todo> toDoList;
@@ -37,18 +36,6 @@ public class Display{
     this.cmp = this.toDoApp.getParser();
   }
 
-  /**
-   * Singleton implentation to enforce only one instance of
-   * the display class
-   * @param todoApp a TodoApplication object
-   * @return a static instance of the Display object
-   */
-  public static Display getView(TodoApplication todoApp){
-    if(view == null){
-      view = new Display(todoApp);
-    }
-    return view;
-  }
 
   /**
    * Displays the output to console according to the parser arguments
