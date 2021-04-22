@@ -1,6 +1,6 @@
 package problem1.view;
 
-
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import problem1.controller.TodoApplication;
@@ -33,6 +33,7 @@ public class DisplayTest {
   Display display3;
   Display display4;
   Display display5;
+  Display display6;
 
   @Before
   public void setUp() throws Exception {
@@ -79,6 +80,27 @@ public class DisplayTest {
     display5 = new Display(tda5);
     display5.display();
   }
+
+  @Test
+  public void testEquals(){
+    display5 = new Display(tda5);
+    display6 = new Display(tda5);
+    assertTrue(display5.equals(display5));
+    assertTrue(display5.equals(display6));
+    assertFalse(display5.equals(tda5));
+    assertFalse(display5.equals(null));
+  }
+
+  @Test
+  public void testHashCode(){
+    display5 = new Display(tda5);
+    display6 = new Display(tda5);
+    display4 = new Display(tda4);
+    assertEquals(display5.hashCode(), display6.hashCode());
+    assertNotEquals(display4.hashCode(), display6.hashCode());
+  }
+
+
 
 
 }

@@ -2,6 +2,7 @@ package problem1.view;
 import java.util.List;
 import java.util.ArrayList;
 
+import java.util.Objects;
 import problem1.controller.CommandLineParser;
 
 import problem1.controller.TodoApplication;
@@ -141,5 +142,24 @@ public class Display{
     Collections.sort(this.toDoList, new PriorityComparator());
     }
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Display display = (Display) o;
+    return Objects.equals(toDoApp, display.toDoApp);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(toDoApp);
+  }
+
+
 
 }
