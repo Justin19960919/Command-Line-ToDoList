@@ -1,4 +1,4 @@
-package problem1.view.comparator;
+package problem1.model.comparator;
 
 import problem1.model.Todo;
 import static org.junit.Assert.*;

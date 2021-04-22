@@ -1,5 +1,7 @@
 package problem1.model;
 
+import java.util.Objects;
+
 public class Todo {
 
   private final int ID;
@@ -89,4 +91,28 @@ public class Todo {
     sb.append('}');
     return sb.toString();
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Todo todo = (Todo) o;
+    return ID == todo.ID &&
+        isCompleted == todo.isCompleted &&
+        priority == todo.priority &&
+        text.equals(todo.text) &&
+        dueDate.equals(todo.dueDate) &&
+        category.equals(todo.category);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(ID, text, isCompleted, dueDate, priority, category);
+  }
+
+
 }

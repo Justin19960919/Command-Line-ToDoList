@@ -9,7 +9,6 @@ import problem1.model.Todo;
 
 import problem1.model.comparator.DateComparator;
 import problem1.model.comparator.PriorityComparator;
-import problem1.view.comparator.*;
 import java.util.Collections;
 
 /**
@@ -65,10 +64,6 @@ public class Display{
    */
   private void printHeader(){
     String HEADER_SPACE = " \t\t ";
-    for(int i=0; i < 100; i++) {
-      System.out.print("#");
-    }
-    System.out.println();
     System.out.println("priority" + HEADER_SPACE +  "due date" + HEADER_SPACE + "Completed"
         + HEADER_SPACE + "Category" + HEADER_SPACE + "text" + HEADER_SPACE);
   }

@@ -1,4 +1,4 @@
-package problem1.controller;
+package problem1.model;
 
 import static org.junit.Assert.*;
 
@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
+import problem1.controller.CommandLineParser;
+import problem1.controller.Options;
+import problem1.controller.TodoApplication;
 import problem1.model.Todo;
 
 public class TodoApplicationTest {

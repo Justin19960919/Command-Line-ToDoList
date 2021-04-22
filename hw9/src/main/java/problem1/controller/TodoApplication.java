@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import problem1.model.Todo;
@@ -18,6 +19,13 @@ public class TodoApplication {
   private static final int OFFSET = 1;  // list starts with 0
   private static final int PRIORITY_DEFAULT = 4;
   private static final boolean COMPLETED_DEFAULT = false;
+  private static final int ID_INDEX = 0;
+  private static final int TEXT_INDEX = 1;
+  private static final int COMPLETED_INDEX = 2;
+  private static final int DUE_INDEX = 3;
+  private static final int PRIORITY_INDEX = 4;
+  private static final int CATEGORY_INDEX = 5;
+
 
   /**
    * constructor of the class
@@ -36,7 +44,7 @@ public class TodoApplication {
   public void addTodo() {
     if (this.parser.getAddTodo()) {
       List<String> newTodo = new ArrayList<>();
-      newTodo.add(String.valueOf(this.todoList.size() + 1));//ID
+      newTodo.add(String.valueOf(this.todoList.size() + OFFSET));//ID
       newTodo.add(this.parser.getTodoText());//text
       newTodo.add(String.valueOf(this.parser.getCompleted()));//completed
       newTodo.add(this.parser.getDueDate() == null ? "?" : this.parser.getDueDate());
@@ -175,13 +183,13 @@ public class TodoApplication {
    * @return the to do object created
    */
   private Todo createTodo(List<String> data) {
-    int ID = Integer.parseInt(data.get(0));//id
-    String text = data.get(1);//text
+    int ID = Integer.parseInt(data.get(ID_INDEX));//id
+    String text = data.get(TEXT_INDEX);//text
     boolean isCompleted =
-        data.get(2).equals("?") ? COMPLETED_DEFAULT : Boolean.parseBoolean(data.get(2));//complete
-    String dueDate = data.get(3).equals("?") ? null : data.get(3);//due date
-    int priority = data.get(4).equals("?") ? PRIORITY_DEFAULT : Integer.parseInt(data.get(4));//priority
-    String category = data.get(5).equals("?") ? null : data.get(5);//category
+        data.get(COMPLETED_INDEX).equals("?") ? COMPLETED_DEFAULT : Boolean.parseBoolean(data.get(2));//complete
+    String dueDate = data.get(DUE_INDEX).equals("?") ? null : data.get(DUE_INDEX);//due date
+    int priority = data.get(PRIORITY_DEFAULT).equals("?") ? PRIORITY_DEFAULT : Integer.parseInt(data.get(PRIORITY_INDEX));//priority
+    String category = data.get(CATEGORY_INDEX).equals("?") ? null : data.get(CATEGORY_INDEX);//category
     return new Todo(ID, text, isCompleted, dueDate, priority, category);
   }
 
@@ -202,4 +210,29 @@ public class TodoApplication {
   }
 
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    TodoApplication that = (TodoApplication) o;
+    return Objects.equals(todoList, that.todoList) &&
+        Objects.equals(parser, that.parser);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(todoList, parser);
+  }
+
+  @Override
+  public String toString() {
+    return "TodoApplication{" +
+        "todoList=" + todoList +
+        ", parser=" + parser +
+        '}';
+  }
 }

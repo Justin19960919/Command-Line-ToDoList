@@ -6,6 +6,12 @@ import problem1.model.Todo;
  * Compares two Todo objects based on Date
  */
 public class DateComparator implements Comparator<Todo>{
+  private static final int LESS = -1;
+  private static final int EQUAL = -1;
+  private static final int GREATER = -1;
+  private static final int MONTH_INDEX = 0;
+  private static final int DAY_INDEX = 1;
+  private static final int YEAR_INDEX = 2;
 
 
   /**
@@ -21,20 +27,18 @@ public class DateComparator implements Comparator<Todo>{
    */
   @Override
   public int compare(Todo td1, Todo td2) {
-//    System.out.println(td1.toString());
-//    System.out.println(td2.toString());
 
     // if td1 is null, then it should come after td2
     if (td1.getDueDate() == null && td2.getDueDate()!= null) {
-      return 1;
+      return GREATER;
     }
     // if td2 is null, then it should come after td1
     if (td1.getDueDate() != null && td2.getDueDate() == null) {
-      return -1;
+      return LESS;
     }
     // if both null, they are equal
     if (td1.getDueDate() == null && td2.getDueDate() == null) {
-      return 0;
+      return EQUAL;
     }
     // else, make into date object
     String td1Due = td1.getDueDate();
@@ -44,8 +48,8 @@ public class DateComparator implements Comparator<Todo>{
 
     // Not caring about invalid formatting yet here
     // if both not null ,we create a date object, and let it compare themselves
-    Date td1Date = new Date(td1DateRes[0],td1DateRes[1],td1DateRes[2]);
-    Date td2Date = new Date(td2DateRes[0],td2DateRes[1],td2DateRes[2]);
+    Date td1Date = new Date(td1DateRes[MONTH_INDEX],td1DateRes[DAY_INDEX],td1DateRes[YEAR_INDEX]);
+    Date td2Date = new Date(td2DateRes[MONTH_INDEX],td2DateRes[DAY_INDEX],td2DateRes[YEAR_INDEX]);
 
     return td1Date.compareTo(td2Date);
   }
