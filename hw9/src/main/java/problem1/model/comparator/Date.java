@@ -102,21 +102,21 @@ public class Date implements Comparable<Date>{
   @Override
   public int compareTo(Date otherDate) {
     if(this.equals(otherDate)){
-      return 0;   // two dates have exactly the same fields
+      return DateComparator.EQUAL;   // two dates have exactly the same fields
     }
 
     if(this.year < otherDate.getYear()){
-      return -1;
+      return DateComparator.LESS;
     }
     if(this.year.equals(otherDate.getYear()) && this.month < otherDate.getMonth()){
-      return -1;
+      return DateComparator.LESS;
     }
 
     if(this.year.equals(otherDate.getYear()) && this.month .equals(otherDate.getMonth()) &&
     this.day < otherDate.getDay()){
-      return -1;
+      return DateComparator.LESS;
     }
-    return 1;
+    return DateComparator.GREATER;
   }
 
 }

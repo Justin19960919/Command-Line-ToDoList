@@ -6,9 +6,9 @@ import problem1.model.Todo;
  * Compares two Todo objects based on Date
  */
 public class DateComparator implements Comparator<Todo>{
-  private static final int LESS = -1;
-  private static final int EQUAL = 0;
-  private static final int GREATER = 1;
+  protected static final int LESS = -1;
+  protected static final int EQUAL = 0;
+  protected static final int GREATER = 1;
   private static final int MONTH_INDEX = 0;
   private static final int DAY_INDEX = 1;
   private static final int YEAR_INDEX = 2;

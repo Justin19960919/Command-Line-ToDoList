@@ -29,6 +29,7 @@ public class Options {
 
   /**
    * Return the only instance of this class
+   * @return the only instance of the class
    */
   public static Options getInstance() {
     if (singleInstance == null) {
