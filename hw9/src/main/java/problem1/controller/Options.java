@@ -74,12 +74,12 @@ public class Options {
     return this.options;
   }
 
-  /**
+ /* *//**
    * Compare this object with the given object.
    *
    * @param o - the given object to compare with
    * @return - true if this is equal to the given object
-   */
+   *//*
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -90,7 +90,7 @@ public class Options {
     }
     Options options1 = (Options) o;
     return Objects.equals(this.options, options1.options);
-  }
+  }*/
 
   /**
    * Calculate the hashcode of this object.
